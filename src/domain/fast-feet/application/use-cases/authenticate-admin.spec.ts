@@ -63,4 +63,24 @@ describe('Authenticate admin', () => {
       expect(result.value).toBeInstanceOf(WrongCredentialsError)
     }
   })
+
+  it('should not be able to authenticate an admin with wrong password', async () => {
+    const admin = makeAdmin({
+      cpf: '00011122233',
+      password: await fakeHasher.hash('12345678'),
+    })
+
+    inMemoryAdminsRepository.items.push(admin)
+
+    const result = await sut.execute({
+      cpf: '00011122233',
+      password: '12345679',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(WrongCredentialsError)
+    }
+  })
 })
