@@ -1,5 +1,5 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { Status } from '@/core/enums/status'
+import { Status } from '@/core/types/status'
 import { Optional } from '@/core/types/optional'
 import { Entity } from 'src/core/entities/entity'
 

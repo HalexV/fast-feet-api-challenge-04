@@ -1,7 +1,7 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import { Entity } from 'src/core/entities/entity'
-import { State } from 'src/core/enums/state'
+import { State } from 'src/core/types/state'
 
 export interface AdminProps {
   name: string
