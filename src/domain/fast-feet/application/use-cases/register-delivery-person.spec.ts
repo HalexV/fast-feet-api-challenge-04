@@ -1,16 +1,19 @@
 import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-delivery-people-repository'
-import { RegisterAdminUseCase } from './register-admin'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
+import { RegisterDeliveryPersonUseCase } from './register-delivery-person'
 
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let fakeHasher: FakeHasher
-let sut: RegisterAdminUseCase
+let sut: RegisterDeliveryPersonUseCase
 
 describe('Register delivery person', () => {
   beforeEach(() => {
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
     fakeHasher = new FakeHasher()
-    sut = new RegisterAdminUseCase(inMemoryDeliveryPeopleRepository, fakeHasher)
+    sut = new RegisterDeliveryPersonUseCase(
+      inMemoryDeliveryPeopleRepository,
+      fakeHasher,
+    )
   })
 
   it('should be able to register a delivery person', async () => {
@@ -28,7 +31,7 @@ describe('Register delivery person', () => {
     expect(result.isRight()).toBeTruthy()
     if (result.isRight()) {
       expect(inMemoryDeliveryPeopleRepository.items[0]).toEqual(
-        result.value.admin,
+        result.value.deliveryPerson,
       )
     }
   })
