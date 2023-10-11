@@ -3,6 +3,7 @@ import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { EditDeliveryPersonUseCase } from './edit-delivery-person'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { DeliveryPersonAlreadyExistsError } from './errors/delivery-person-already-exists-error'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let fakeHasher: FakeHasher
@@ -74,6 +75,29 @@ describe('Edit delivery person', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(DeliveryPersonAlreadyExistsError)
+    }
+  })
+
+  it('should not be able to edit a delivery person that does not exist', async () => {
+    const deliveryPerson = makeDeliveryPerson()
+
+    inMemoryDeliveryPeopleRepository.items.push(deliveryPerson)
+
+    const result = await sut.execute({
+      id: 'non-existent-id',
+      name: 'John Doe',
+      cpf: '00011122233',
+      password: '12345678',
+      email: 'johndoe@example.com',
+      address: 'john doe street',
+      district: 'center',
+      city: 'John Doe City',
+      state: 'AC',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
