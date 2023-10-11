@@ -53,4 +53,19 @@ describe('Fetch delivery people', () => {
       ])
     }
   })
+
+  it('should be able to fetch paginated delivery people', async () => {
+    for (let i = 0; i < 22; i++) {
+      await inMemoryDeliveryPeopleRepository.create(makeDeliveryPerson())
+    }
+
+    const result = await sut.execute({
+      page: 2,
+    })
+
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) {
+      expect(result.value.deliveryPeople).toHaveLength(2)
+    }
+  })
 })
