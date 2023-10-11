@@ -19,8 +19,16 @@ export class InMemoryDeliveryPeopleRepository
     return deliveryPerson
   }
 
-  async create(deliveryPerson: DeliveryPerson): Promise<void> {
-    this.items.push(deliveryPerson)
+  async findById(id: string): Promise<DeliveryPerson | null> {
+    const deliveryPerson = this.items.find(
+      (deliveryPerson) => deliveryPerson.id.toString() === id,
+    )
+
+    if (!deliveryPerson) {
+      return null
+    }
+
+    return deliveryPerson
   }
 
   async findMany({ page }: PaginationParams): Promise<DeliveryPerson[]> {
@@ -30,5 +38,17 @@ export class InMemoryDeliveryPeopleRepository
       .slice((page - 1) * 20, page * 20)
 
     return deliveryPerson
+  }
+
+  async create(deliveryPerson: DeliveryPerson): Promise<void> {
+    this.items.push(deliveryPerson)
+  }
+
+  async save(deliveryPerson: DeliveryPerson): Promise<void> {
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === deliveryPerson.id.toString(),
+    )
+
+    this.items[itemIndex] = deliveryPerson
   }
 }
