@@ -1,6 +1,7 @@
 import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-delivery-people-repository'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { RegisterDeliveryPersonUseCase } from './register-delivery-person'
+import { DeliveryPersonAlreadyExistsError } from './errors/delivery-person-already-exists-error'
 
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let fakeHasher: FakeHasher
@@ -55,5 +56,34 @@ describe('Register delivery person', () => {
     expect(inMemoryDeliveryPeopleRepository.items[0].password).toEqual(
       hashedPassword,
     )
+  })
+
+  it('should not be able to register a delivery person with same cpf', async () => {
+    await sut.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      cpf: '11122233304',
+      password: '12345678',
+      address: 'john doe street, 450',
+      district: 'center',
+      city: 'example city',
+      state: 'RO',
+    })
+
+    const result = await sut.execute({
+      name: 'Carl Doe',
+      email: 'carldoe@example.com',
+      cpf: '11122233304',
+      password: '12345678',
+      address: 'Carl doe street, 450',
+      district: 'center',
+      city: 'example city',
+      state: 'RO',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(DeliveryPersonAlreadyExistsError)
+    }
   })
 })
