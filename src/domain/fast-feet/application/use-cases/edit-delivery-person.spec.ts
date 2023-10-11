@@ -2,6 +2,7 @@ import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-de
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { EditDeliveryPersonUseCase } from './edit-delivery-person'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
+import { DeliveryPersonAlreadyExistsError } from './errors/delivery-person-already-exists-error'
 
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let fakeHasher: FakeHasher
@@ -45,6 +46,34 @@ describe('Edit delivery person', () => {
         city: 'John Doe City',
         state: 'AC',
       })
+    }
+  })
+
+  it('should not be able to edit a cpf to another that already exists', async () => {
+    const deliveryPerson1 = makeDeliveryPerson({
+      cpf: '00011122233',
+    })
+
+    const deliveryPerson2 = makeDeliveryPerson()
+
+    inMemoryDeliveryPeopleRepository.items.push(deliveryPerson1)
+    inMemoryDeliveryPeopleRepository.items.push(deliveryPerson2)
+
+    const result = await sut.execute({
+      id: deliveryPerson2.id.toString(),
+      name: 'John Doe',
+      cpf: '00011122233',
+      password: '12345678',
+      email: 'johndoe@example.com',
+      address: 'john doe street',
+      district: 'center',
+      city: 'John Doe City',
+      state: 'AC',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(DeliveryPersonAlreadyExistsError)
     }
   })
 })
