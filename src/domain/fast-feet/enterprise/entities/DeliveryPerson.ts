@@ -14,6 +14,7 @@ export interface DeliveryPersonProps {
   state: State
   createdAt: Date
   updatedAt?: Date | null
+  isActive: boolean
 }
 
 export class DeliveryPerson extends Entity<DeliveryPersonProps> {
@@ -97,18 +98,28 @@ export class DeliveryPerson extends Entity<DeliveryPersonProps> {
     return this.props.updatedAt
   }
 
+  get isActive() {
+    return this.props.isActive
+  }
+
+  set isActive(isActive: boolean) {
+    this.props.isActive = isActive
+    this.touch()
+  }
+
   private touch() {
     this.props.updatedAt = new Date()
   }
 
   static create(
-    props: Optional<DeliveryPersonProps, 'createdAt'>,
+    props: Optional<DeliveryPersonProps, 'createdAt' | 'isActive'>,
     id?: UniqueEntityId,
   ) {
     const deliveryPerson = new DeliveryPerson(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
+        isActive: props.isActive ?? true,
       },
       id,
     )

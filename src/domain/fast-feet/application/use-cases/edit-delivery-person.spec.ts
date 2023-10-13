@@ -34,6 +34,7 @@ describe('Edit delivery person', () => {
       district: 'center',
       city: 'John Doe City',
       state: 'AC',
+      isActive: false,
     })
 
     expect(result.isRight()).toBeTruthy()
@@ -46,6 +47,7 @@ describe('Edit delivery person', () => {
         district: 'center',
         city: 'John Doe City',
         state: 'AC',
+        isActive: false,
       })
     }
   })
@@ -70,6 +72,7 @@ describe('Edit delivery person', () => {
       district: 'center',
       city: 'John Doe City',
       state: 'AC',
+      isActive: true,
     })
 
     expect(result.isLeft()).toBeTruthy()
@@ -93,6 +96,7 @@ describe('Edit delivery person', () => {
       district: 'center',
       city: 'John Doe City',
       state: 'AC',
+      isActive: true,
     })
 
     expect(result.isLeft()).toBeTruthy()

@@ -16,6 +16,7 @@ interface EditDeliveryPersonUseCaseRequest {
   district: string
   city: string
   state: State
+  isActive: boolean
 }
 
 type EditDeliveryPersonUseCaseResponse = Either<
@@ -41,6 +42,7 @@ export class EditDeliveryPersonUseCase {
     district,
     city,
     state,
+    isActive,
   }: EditDeliveryPersonUseCaseRequest): Promise<EditDeliveryPersonUseCaseResponse> {
     const deliveryPerson = await this.deliveryPeopleRepository.findById(id)
 
@@ -65,6 +67,7 @@ export class EditDeliveryPersonUseCase {
     deliveryPerson.district = district
     deliveryPerson.city = city
     deliveryPerson.state = state
+    deliveryPerson.isActive = isActive
 
     await this.deliveryPeopleRepository.save(deliveryPerson)
 
