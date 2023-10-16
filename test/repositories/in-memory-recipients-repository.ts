@@ -15,6 +15,18 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
     return recipient
   }
 
+  async findById(id: string): Promise<Recipient | null> {
+    const recipient = this.items.find(
+      (recipient) => recipient.id.toString() === id,
+    )
+
+    if (!recipient) {
+      return null
+    }
+
+    return recipient
+  }
+
   async findMany({ page }: PaginationParams): Promise<Recipient[]> {
     const compareFn = new Intl.Collator().compare
     const recipients = this.items
