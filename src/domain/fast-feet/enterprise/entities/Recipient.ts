@@ -20,28 +20,63 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+    this.touch()
+  }
+
   get email() {
     return this.props.email
+  }
+
+  set email(email: string) {
+    this.props.email = email
+    this.touch()
   }
 
   get address() {
     return this.props.address
   }
 
+  set address(address: string) {
+    this.props.address = address
+    this.touch()
+  }
+
   get district() {
     return this.props.district
+  }
+
+  set district(district: string) {
+    this.props.district = district
+    this.touch()
   }
 
   get city() {
     return this.props.city
   }
 
+  set city(city: string) {
+    this.props.city = city
+    this.touch()
+  }
+
   get state() {
     return this.props.state
   }
 
+  set state(state: State) {
+    this.props.state = state
+    this.touch()
+  }
+
   get zipcode() {
     return this.props.zipcode
+  }
+
+  set zipcode(zipcode: string) {
+    this.props.zipcode = zipcode
+    this.touch()
   }
 
   get createdAt() {
@@ -50,6 +85,10 @@ export class Recipient extends Entity<RecipientProps> {
 
   get updatedAt() {
     return this.props.updatedAt
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
   }
 
   static create(
