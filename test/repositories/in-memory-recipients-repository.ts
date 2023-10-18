@@ -1,8 +1,15 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { RecipientsRepository } from '@/domain/fast-feet/application/repositories/recipients-repository'
 import { Recipient } from '@/domain/fast-feet/enterprise/entities/Recipient'
+import { InMemoryPackagesRepository } from './in-memory-packages-repository'
+import { InMemoryNotificationsRepository } from './in-memory-notifications-repository'
 
 export class InMemoryRecipientsRepository implements RecipientsRepository {
+  constructor(
+    private readonly packagesRepository: InMemoryPackagesRepository,
+    private readonly notificationsRepository: InMemoryNotificationsRepository,
+  ) {}
+
   public items: Recipient[] = []
 
   async findByEmail(email: string): Promise<Recipient | null> {
@@ -46,5 +53,20 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
     )
 
     this.items[itemIndex] = recipient
+  }
+
+  async delete(recipient: Recipient): Promise<void> {
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === recipient.id.toString(),
+    )
+
+    this.items.splice(itemIndex, 1)
+
+    await this.packagesRepository.deleteManyByRecipientId(
+      recipient.id.toString(),
+    )
+    await this.notificationsRepository.deleteManyByRecipientId(
+      recipient.id.toString(),
+    )
   }
 }
