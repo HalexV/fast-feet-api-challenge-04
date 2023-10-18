@@ -11,7 +11,6 @@ export interface PackageProps {
   deliveredAt?: Date | null
   deliveryPersonId?: UniqueEntityId | null
   recipientId: UniqueEntityId
-  photoId?: UniqueEntityId | null
   updatedAt?: Date | null
 }
 
@@ -42,10 +41,6 @@ export class Package extends Entity<PackageProps> {
 
   get recipientId() {
     return this.props.recipientId
-  }
-
-  get photoId() {
-    return this.props.photoId
   }
 
   get updatedAt() {

@@ -5,6 +5,7 @@ import { Entity } from 'src/core/entities/entity'
 export interface PhotoProps {
   filename: string
   createdAt: Date
+  packageId: UniqueEntityId
 }
 
 export class Photo extends Entity<PhotoProps> {
@@ -14,6 +15,10 @@ export class Photo extends Entity<PhotoProps> {
 
   get createdAt() {
     return this.props.createdAt
+  }
+
+  get packageId() {
+    return this.props.packageId
   }
 
   static create(props: Optional<PhotoProps, 'createdAt'>, id?: UniqueEntityId) {

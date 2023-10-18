@@ -83,7 +83,7 @@
                         <mxRectangle x="-254" y="167" width="89" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="43" value="+id&#10;+description&#10;+status&#10;+postedAt&#10;+withdrewAt&#10;+deliveredAt&#10;+updatedAt&#10;+deliveryPersonId&#10;+recipientId&#10;+photoId" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="42" vertex="1">
+                <mxCell id="43" value="+id&#10;+description&#10;+status&#10;+postedAt&#10;+withdrewAt&#10;+deliveredAt&#10;+updatedAt&#10;+deliveryPersonId&#10;+recipientId&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="42" vertex="1">
                     <mxGeometry y="30" width="160" height="161" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="Notification" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
@@ -95,7 +95,7 @@
                 <mxCell id="47" value="Photo" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
                     <mxGeometry x="-252" y="344" width="160" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="48" value="+id&#10;+filename&#10;+createdAt" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="47" vertex="1">
+                <mxCell id="48" value="+id&#10;+filename&#10;+createdAt&#10;+packageId" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="47" vertex="1">
                     <mxGeometry y="30" width="160" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="49" value="Status list" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=none;gradientColor=none;" parent="1" vertex="1">
@@ -170,7 +170,7 @@
                 <mxCell id="69" value="&lt;p style=&quot;line-height: 30%;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;O delete do delivery person será um soft delete. Será usado o isActive para dizer se o cadastro está ativo ou não.&lt;/font&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=36;" parent="1" vertex="1">
                     <mxGeometry x="804" y="1068" width="392" height="59" as="geometry"/>
                 </mxCell>
-                <mxCell id="70" value="Cada recipient terá um email único" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="70" value="Cada recipient terá um email único" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="1270" y="1078" width="280" height="30" as="geometry"/>
                 </mxCell>
             </root>
