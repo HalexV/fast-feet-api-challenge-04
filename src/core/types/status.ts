@@ -1,1 +1,6 @@
-export type Status = 'waiting' | 'withdrew' | 'delivered' | 'returned'
+export type Status =
+  | 'posted'
+  | 'waiting'
+  | 'withdrew'
+  | 'delivered'
+  | 'returned'

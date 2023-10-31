@@ -5,7 +5,7 @@ import { Entity } from 'src/core/entities/entity'
 
 export interface PackageProps {
   description: string
-  status?: Status | null
+  status: Status
   postedAt: Date
   withdrewAt?: Date | null
   deliveredAt?: Date | null
@@ -48,12 +48,13 @@ export class Package extends Entity<PackageProps> {
   }
 
   static create(
-    props: Optional<PackageProps, 'postedAt'>,
+    props: Optional<PackageProps, 'status' | 'postedAt'>,
     id?: UniqueEntityId,
   ) {
     const newPackage = new Package(
       {
         ...props,
+        status: props.status ?? 'posted',
         postedAt: props.postedAt ?? new Date(),
       },
       id,
