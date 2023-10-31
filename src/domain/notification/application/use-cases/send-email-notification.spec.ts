@@ -10,7 +10,7 @@ describe('Send email notification', () => {
     sut = new SendEmailNotificationUseCase(fakeEmailer)
   })
 
-  it('should be able to send an email', async () => {
+  it('should be able to send an email notification', async () => {
     const sendSpy = vi.spyOn(fakeEmailer, 'send')
 
     const title = 'New email notification'
