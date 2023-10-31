@@ -1,6 +1,7 @@
 import { PackagesRepository } from '@/domain/fast-feet/application/repositories/packages-repository'
 import { Package } from '@/domain/fast-feet/enterprise/entities/Package'
 import { InMemoryPhotosRepository } from './in-memory-photos-repository'
+import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryPackagesRepository implements PackagesRepository {
   constructor(private readonly photosRepository: InMemoryPhotosRepository) {}
@@ -21,6 +22,8 @@ export class InMemoryPackagesRepository implements PackagesRepository {
 
   async create(pkg: Package): Promise<void> {
     this.items.push(pkg)
+
+    DomainEvents.dispatchEventsForAggregate(pkg.id)
   }
 
   async save(pkg: Package): Promise<void> {

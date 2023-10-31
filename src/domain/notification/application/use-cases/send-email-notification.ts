@@ -1,6 +1,6 @@
 import { Emailer } from '../email/emailer'
 
-interface SendEmailNotificationUseCaseRequest {
+export interface SendEmailNotificationUseCaseRequest {
   title: string
   content: string
   recipientEmail: string
