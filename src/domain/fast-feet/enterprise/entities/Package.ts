@@ -1,7 +1,8 @@
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Status } from '@/core/types/status'
 import { Optional } from '@/core/types/optional'
-import { Entity } from 'src/core/entities/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
+import { PackagePostedEvent } from '../events/package-posted-event'
 
 export interface PackageProps {
   description: string
@@ -14,7 +15,7 @@ export interface PackageProps {
   updatedAt?: Date | null
 }
 
-export class Package extends Entity<PackageProps> {
+export class Package extends AggregateRoot<PackageProps> {
   get description() {
     return this.props.description
   }
@@ -59,6 +60,12 @@ export class Package extends Entity<PackageProps> {
       },
       id,
     )
+
+    const isNewPackage = !id
+
+    if (isNewPackage) {
+      newPackage.addDomainEvent(new PackagePostedEvent(newPackage))
+    }
 
     return newPackage
   }
