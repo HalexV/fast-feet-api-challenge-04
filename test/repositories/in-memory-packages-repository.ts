@@ -2,6 +2,7 @@ import { PackagesRepository } from '@/domain/fast-feet/application/repositories/
 import { Package } from '@/domain/fast-feet/enterprise/entities/Package'
 import { InMemoryPhotosRepository } from './in-memory-photos-repository'
 import { DomainEvents } from '@/core/events/domain-events'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 export class InMemoryPackagesRepository implements PackagesRepository {
   constructor(private readonly photosRepository: InMemoryPhotosRepository) {}
@@ -14,6 +15,12 @@ export class InMemoryPackagesRepository implements PackagesRepository {
     if (!pkg) return null
 
     return pkg
+  }
+
+  async findMany({ page }: PaginationParams): Promise<Package[]> {
+    return this.items
+      .sort((a, b) => b.postedAt.getTime() - a.postedAt.getTime())
+      .slice((page - 1) * 20, page * 20)
   }
 
   async findSomeNotDelivered(): Promise<Package | null> {
