@@ -8,6 +8,14 @@ export class InMemoryPackagesRepository implements PackagesRepository {
 
   public items: Package[] = []
 
+  async findById(id: string): Promise<Package | null> {
+    const pkg = this.items.find((pkg) => pkg.id.toString() === id)
+
+    if (!pkg) return null
+
+    return pkg
+  }
+
   async findSomeNotDelivered(): Promise<Package | null> {
     const pkg = this.items.find(
       (pkg) => pkg.status !== 'delivered' && pkg.deliveredAt == null,
