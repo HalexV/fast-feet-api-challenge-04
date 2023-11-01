@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 /**
  * This function loops through a function rerunning all assertions
  * inside of it until it gets a truthy result.
@@ -11,7 +13,7 @@ export async function waitFor(
   assertions: () => void | Promise<void>,
   maxDuration = 1000,
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     let elapsedTime = 0
 
     const interval = setInterval(async () => {

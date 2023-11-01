@@ -1,13 +1,27 @@
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 import { RegisterRecipientUseCase } from './register-recipient'
 import { RecipientAlreadyExistsError } from './errors/recipient-already-exists-error'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
+import { InMemoryPackagesRepository } from 'test/repositories/in-memory-packages-repository'
+import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-repository'
 
+let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryPackagesRepository: InMemoryPackagesRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let sut: RegisterRecipientUseCase
 
 describe('Register recipient', () => {
   beforeEach(() => {
-    inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
+    inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryPackagesRepository = new InMemoryPackagesRepository(
+      inMemoryPhotosRepository,
+    )
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     sut = new RegisterRecipientUseCase(inMemoryRecipientsRepository)
   })
 

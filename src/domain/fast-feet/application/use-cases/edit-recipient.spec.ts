@@ -3,13 +3,27 @@ import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipi
 import { EditRecipientUseCase } from './edit-recipient'
 import { makeRecipient } from 'test/factories/make-recipient'
 import { RecipientAlreadyExistsError } from './errors/recipient-already-exists-error'
+import { InMemoryPackagesRepository } from 'test/repositories/in-memory-packages-repository'
+import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-repository'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 
+let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryPackagesRepository: InMemoryPackagesRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let sut: EditRecipientUseCase
 
 describe('Edit delivery person', () => {
   beforeEach(() => {
-    inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
+    inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryPackagesRepository = new InMemoryPackagesRepository(
+      inMemoryPhotosRepository,
+    )
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     sut = new EditRecipientUseCase(inMemoryRecipientsRepository)
   })
 

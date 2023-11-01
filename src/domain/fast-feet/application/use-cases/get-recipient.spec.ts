@@ -2,13 +2,27 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 import { GetRecipientUseCase } from './get-recipient'
 import { makeRecipient } from 'test/factories/make-recipient'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
+import { InMemoryPackagesRepository } from 'test/repositories/in-memory-packages-repository'
+import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-repository'
 
+let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryPackagesRepository: InMemoryPackagesRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let sut: GetRecipientUseCase
 
 describe('Get recipient', () => {
   beforeEach(() => {
-    inMemoryRecipientsRepository = new InMemoryRecipientsRepository()
+    inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryPackagesRepository = new InMemoryPackagesRepository(
+      inMemoryPhotosRepository,
+    )
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     sut = new GetRecipientUseCase(inMemoryRecipientsRepository)
   })
 
