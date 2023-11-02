@@ -9,6 +9,7 @@ import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-delivery-people-repository'
 import { makeNotification } from 'test/factories/make-notification'
 import { makePhoto } from 'test/factories/make-photo'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -69,5 +70,16 @@ describe('Remove recipient', () => {
     expect(inMemoryPackagesRepository.items).toHaveLength(0)
     expect(inMemoryNotificationsRepository.items).toHaveLength(0)
     expect(inMemoryPhotosRepository.items).toHaveLength(0)
+  })
+
+  it('should not be able to remove a recipient that does not exist', async () => {
+    const result = await sut.execute({
+      id: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
   })
 })
