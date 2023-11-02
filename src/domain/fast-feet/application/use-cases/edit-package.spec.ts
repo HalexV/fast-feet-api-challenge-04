@@ -128,4 +128,32 @@ describe('Edit package', () => {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
+
+  it('should not be able to edit a package when delivery person informed does not exist', async () => {
+    const pkg = makePackage()
+    const recipient = makeRecipient()
+
+    inMemoryPackagesRepository.create(pkg)
+    inMemoryRecipientsRepository.create(recipient)
+
+    const postedAtDate = new Date('2023-01-01')
+    const withdrewDate = new Date('2023-01-01')
+    const deliveredAtDate = new Date('2023-01-07')
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+      description: 'Description edited',
+      postedAt: postedAtDate,
+      recipientId: recipient.id.toString(),
+      status: 'delivered',
+      withdrewAt: withdrewDate,
+      deliveredAt: deliveredAtDate,
+      deliveryPersonId: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
 })
