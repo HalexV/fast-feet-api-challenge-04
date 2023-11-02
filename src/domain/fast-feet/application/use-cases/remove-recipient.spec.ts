@@ -10,6 +10,7 @@ import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-de
 import { makeNotification } from 'test/factories/make-notification'
 import { makePhoto } from 'test/factories/make-photo'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { RemoveRecipientNotAllowedError } from './errors/remove-recipient-not-allowed-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -80,6 +81,25 @@ describe('Remove recipient', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
+
+  it('should not be able to remove a recipient who has an undelivered package', async () => {
+    const recipient = makeRecipient()
+    await inMemoryRecipientsRepository.create(recipient)
+
+    const pkg = makePackage({
+      recipientId: recipient.id,
+    })
+    await inMemoryPackagesRepository.create(pkg)
+
+    const result = await sut.execute({
+      id: recipient.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(RemoveRecipientNotAllowedError)
     }
   })
 })
