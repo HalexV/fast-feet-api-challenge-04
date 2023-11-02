@@ -7,6 +7,7 @@ import { EditPackageUseCase } from './edit-package'
 import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-delivery-people-repository'
 import { makePackage } from 'test/factories/make-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -69,6 +70,34 @@ describe('Edit package', () => {
         deliveredAt: deliveredAtDate,
         deliveryPersonId: deliveryPerson.id,
       })
+    }
+  })
+
+  it('should not be able to edit a package that does not exist', async () => {
+    const recipient = makeRecipient()
+    const deliveryPerson = makeDeliveryPerson()
+
+    inMemoryRecipientsRepository.create(recipient)
+    inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+
+    const postedAtDate = new Date('2023-01-01')
+    const withdrewDate = new Date('2023-01-01')
+    const deliveredAtDate = new Date('2023-01-07')
+
+    const result = await sut.execute({
+      id: 'non-existent-id',
+      description: 'Description edited',
+      postedAt: postedAtDate,
+      recipientId: recipient.id.toString(),
+      status: 'delivered',
+      withdrewAt: withdrewDate,
+      deliveredAt: deliveredAtDate,
+      deliveryPersonId: deliveryPerson.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
