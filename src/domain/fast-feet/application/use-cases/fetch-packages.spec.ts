@@ -48,7 +48,6 @@ describe('Fetch packages', () => {
 
     expect(result.isRight()).toBeTruthy()
     if (result.isRight()) {
-      console.dir(result.value, { depth: null })
       expect(result.value.pkgs).toEqual([
         expect.objectContaining({
           description: 'Package 3',
