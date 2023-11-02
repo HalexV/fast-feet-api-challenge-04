@@ -188,4 +188,35 @@ describe('Edit package', () => {
       expect(result.value).toBeInstanceOf(PackageStatusNotAllowedError)
     }
   })
+
+  it('should be able to edit a package with only required fields', async () => {
+    const pkg = makePackage()
+    const recipient = makeRecipient()
+
+    inMemoryPackagesRepository.create(pkg)
+    inMemoryRecipientsRepository.create(recipient)
+
+    const postedAtDate = new Date('2023-01-01')
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+      description: 'Description edited',
+      postedAt: postedAtDate,
+      recipientId: recipient.id.toString(),
+      status: 'waiting',
+    })
+
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) {
+      expect(inMemoryPackagesRepository.items[0]).toMatchObject({
+        description: 'Description edited',
+        postedAt: postedAtDate,
+        recipientId: recipient.id,
+        status: 'waiting',
+        withdrewAt: null,
+        deliveredAt: null,
+        deliveryPersonId: null,
+      })
+    }
+  })
 })
