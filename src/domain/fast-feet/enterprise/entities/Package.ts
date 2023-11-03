@@ -34,19 +34,21 @@ export class Package extends AggregateRoot<PackageProps> {
   }
 
   set status(status: Status) {
-    switch (status) {
-      case StatusOptions.waiting:
-        this.addDomainEvent(new PackageWaitingEvent(this))
-        break
-      case StatusOptions.withdrew:
-        this.addDomainEvent(new PackageWithdrewEvent(this))
-        break
-      case StatusOptions.delivered:
-        this.addDomainEvent(new PackageDeliveredEvent(this))
-        break
-      case StatusOptions.returned:
-        this.addDomainEvent(new PackageReturnedEvent(this))
-        break
+    if (status !== this.props.status) {
+      switch (status) {
+        case StatusOptions.waiting:
+          this.addDomainEvent(new PackageWaitingEvent(this))
+          break
+        case StatusOptions.withdrew:
+          this.addDomainEvent(new PackageWithdrewEvent(this))
+          break
+        case StatusOptions.delivered:
+          this.addDomainEvent(new PackageDeliveredEvent(this))
+          break
+        case StatusOptions.returned:
+          this.addDomainEvent(new PackageReturnedEvent(this))
+          break
+      }
     }
 
     this.props.status = status
