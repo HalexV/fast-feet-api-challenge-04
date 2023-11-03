@@ -66,4 +66,22 @@ describe('Withdraw package', () => {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
+
+  it('should not be able to withdraw a package when delivery person does not exist', async () => {
+    const pkg = makePackage({
+      status: 'waiting',
+    })
+
+    await inMemoryPackagesRepository.create(pkg)
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+      deliveryPersonId: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
 })
