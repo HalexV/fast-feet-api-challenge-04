@@ -5,6 +5,7 @@ import { makePackage } from 'test/factories/make-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { WithdrawPackageUseCase } from './withdraw-package'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -82,6 +83,24 @@ describe('Withdraw package', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
+
+  it('should not be able to withdraw a package that has not status waiting', async () => {
+    const pkg = makePackage()
+    const deliveryPerson = makeDeliveryPerson()
+
+    await inMemoryPackagesRepository.create(pkg)
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+      deliveryPersonId: deliveryPerson.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(PackageStatusNotAllowedError)
     }
   })
 })

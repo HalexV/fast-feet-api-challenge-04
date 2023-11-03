@@ -33,15 +33,15 @@ export class WithdrawPackageUseCase {
       return left(new ResourceNotFoundError())
     }
 
+    if (pkg.status !== 'waiting') {
+      return left(new PackageStatusNotAllowedError())
+    }
+
     const deliveryPerson =
       await this.deliveryPeopleRepository.findById(deliveryPersonId)
 
     if (!deliveryPerson) {
       return left(new ResourceNotFoundError())
-    }
-
-    if (pkg.status !== 'waiting') {
-      return left(new PackageStatusNotAllowedError())
     }
 
     pkg.status = 'withdrew'
