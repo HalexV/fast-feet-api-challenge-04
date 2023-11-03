@@ -4,6 +4,7 @@ import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-de
 import { makePackage } from 'test/factories/make-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { WithdrawPackageUseCase } from './withdraw-package'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -47,6 +48,22 @@ describe('Withdraw package', () => {
           withdrewAt: expect.any(Date),
         }),
       )
+    }
+  })
+
+  it('should not be able to withdraw a package that does not exist', async () => {
+    const deliveryPerson = makeDeliveryPerson()
+
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+
+    const result = await sut.execute({
+      id: 'non-existent-id',
+      deliveryPersonId: deliveryPerson.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
