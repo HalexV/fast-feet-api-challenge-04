@@ -42,9 +42,9 @@ describe('Edit package', () => {
     const recipient = makeRecipient()
     const deliveryPerson = makeDeliveryPerson()
 
-    inMemoryPackagesRepository.create(pkg)
-    inMemoryRecipientsRepository.create(recipient)
-    inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+    await inMemoryPackagesRepository.create(pkg)
+    await inMemoryRecipientsRepository.create(recipient)
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
     const postedAtDate = new Date('2023-01-01')
     const withdrewDate = new Date('2023-01-01')
@@ -79,8 +79,8 @@ describe('Edit package', () => {
     const recipient = makeRecipient()
     const deliveryPerson = makeDeliveryPerson()
 
-    inMemoryRecipientsRepository.create(recipient)
-    inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+    await inMemoryRecipientsRepository.create(recipient)
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
     const postedAtDate = new Date('2023-01-01')
     const withdrewDate = new Date('2023-01-01')
@@ -107,8 +107,8 @@ describe('Edit package', () => {
     const pkg = makePackage()
     const deliveryPerson = makeDeliveryPerson()
 
-    inMemoryPackagesRepository.create(pkg)
-    inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+    await inMemoryPackagesRepository.create(pkg)
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
     const postedAtDate = new Date('2023-01-01')
     const withdrewDate = new Date('2023-01-01')
@@ -135,8 +135,8 @@ describe('Edit package', () => {
     const pkg = makePackage()
     const recipient = makeRecipient()
 
-    inMemoryPackagesRepository.create(pkg)
-    inMemoryRecipientsRepository.create(recipient)
+    await inMemoryPackagesRepository.create(pkg)
+    await inMemoryRecipientsRepository.create(recipient)
 
     const postedAtDate = new Date('2023-01-01')
     const withdrewDate = new Date('2023-01-01')
@@ -164,9 +164,9 @@ describe('Edit package', () => {
     const recipient = makeRecipient()
     const deliveryPerson = makeDeliveryPerson()
 
-    inMemoryPackagesRepository.create(pkg)
-    inMemoryRecipientsRepository.create(recipient)
-    inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+    await inMemoryPackagesRepository.create(pkg)
+    await inMemoryRecipientsRepository.create(recipient)
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
     const postedAtDate = new Date('2023-01-01')
     const withdrewDate = new Date('2023-01-01')
@@ -193,8 +193,8 @@ describe('Edit package', () => {
     const pkg = makePackage()
     const recipient = makeRecipient()
 
-    inMemoryPackagesRepository.create(pkg)
-    inMemoryRecipientsRepository.create(recipient)
+    await inMemoryPackagesRepository.create(pkg)
+    await inMemoryRecipientsRepository.create(recipient)
 
     const postedAtDate = new Date('2023-01-01')
 

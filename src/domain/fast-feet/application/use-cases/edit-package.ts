@@ -20,7 +20,7 @@ interface EditPackageUseCaseRequest {
 }
 
 type EditPackageUseCaseResponse = Either<
-  ResourceNotFoundError,
+  ResourceNotFoundError | PackageStatusNotAllowedError,
   {
     pkg: Package
   }
