@@ -62,4 +62,14 @@ export class InMemoryPackagesRepository implements PackagesRepository {
 
     this.items = pkgs
   }
+
+  async delete(pkg: Package): Promise<void> {
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === pkg.id.toString(),
+    )
+
+    this.items.splice(itemIndex, 1)
+
+    await this.photosRepository.deleteByPackageId(pkg.id.toString())
+  }
 }
