@@ -5,16 +5,16 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
 - [x] Deve ser possível realizar login com CPF e Senha
 - [x] Deve ser possível realizar o CRUD dos entregadores
-- [] Deve ser possível realizar o CRUD das encomendas
 - [x] Deve ser possível realizar o CRUD dos destinatários
+- [x] Deve ser possível realizar o CRUD das encomendas
 - [] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
 - [] Deve ser possível retirar uma encomenda
 - [] Deve ser possível marcar uma encomenda como entregue
 - [] Deve ser possível marcar uma encomenda como devolvida
 - [] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
+- [] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 - [] Deve ser possível alterar a senha de um usuário
 - [] Deve ser possível listar as entregas de um usuário
-- [] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 
 ### Regras de negócio
 
