@@ -2,6 +2,7 @@ import { InMemoryPackagesRepository } from 'test/repositories/in-memory-packages
 import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-repository'
 import { makePackage } from 'test/factories/make-package'
 import { MarkPackageAsWaitingUseCase } from './mark-package-as-waiting'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -42,6 +43,17 @@ describe('Mark package as waiting', () => {
     expect(result2.isRight()).toBeTruthy()
     if (result2.isRight()) {
       expect(inMemoryPackagesRepository.items[1].status).toBe('waiting')
+    }
+  })
+
+  it('should not be able to mark a package as waiting when it does not exist', async () => {
+    const result = await sut.execute({
+      id: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
