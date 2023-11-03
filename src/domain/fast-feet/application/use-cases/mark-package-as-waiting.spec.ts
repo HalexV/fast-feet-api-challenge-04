@@ -3,6 +3,7 @@ import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-rep
 import { makePackage } from 'test/factories/make-package'
 import { MarkPackageAsWaitingUseCase } from './mark-package-as-waiting'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -54,6 +55,23 @@ describe('Mark package as waiting', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
+
+  it('should not be able to mark a package as waiting when its status is not posted or returned', async () => {
+    const pkg = makePackage({
+      status: 'withdrew',
+    })
+
+    await inMemoryPackagesRepository.create(pkg)
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(PackageStatusNotAllowedError)
     }
   })
 })
