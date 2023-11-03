@@ -3,6 +3,7 @@ import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-rep
 import { makePackage } from 'test/factories/make-package'
 import { DeletePackageUseCase } from './delete-package'
 import { makePhoto } from 'test/factories/make-photo'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -34,5 +35,16 @@ describe('Delete package', () => {
     expect(result.isRight()).toBeTruthy()
     expect(inMemoryPackagesRepository.items).toHaveLength(0)
     expect(inMemoryPhotosRepository.items).toHaveLength(0)
+  })
+
+  it('should not be able to delete a package that does not exist', async () => {
+    const result = await sut.execute({
+      id: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
   })
 })
