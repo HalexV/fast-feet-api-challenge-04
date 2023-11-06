@@ -4,6 +4,16 @@ import { Photo } from '@/domain/fast-feet/enterprise/entities/Photo'
 export class InMemoryPhotosRepository implements PhotosRepository {
   public items: Photo[] = []
 
+  async findByPackageId(packageId: string): Promise<Photo | null> {
+    const photo = this.items.find(
+      (photo) => photo.packageId.toString() === packageId,
+    )
+
+    if (!photo) return null
+
+    return photo
+  }
+
   async create(photo: Photo): Promise<void> {
     this.items.push(photo)
   }
