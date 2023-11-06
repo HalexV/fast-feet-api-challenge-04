@@ -8,6 +8,7 @@ import { FakeUploader } from 'test/storage/fake-uploader'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
+import { InvalidPhotoTypeError } from './errors/invalid-photo-type-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -134,6 +135,31 @@ describe('Upload photo and mark package as delivered', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(NotAllowedError)
+    }
+  })
+
+  it('should not be able to upload a photo and mark package as delivered when file type is not an image type', async () => {
+    const deliveryPerson = makeDeliveryPerson()
+
+    const pkg = makePackage({
+      status: 'withdrew',
+      deliveryPersonId: deliveryPerson.id,
+    })
+
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+    await inMemoryPackagesRepository.create(pkg)
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+      deliveryPersonId: deliveryPerson.id.toString(),
+      filename: 'delivered.png',
+      fileType: 'audio/mpeg',
+      body: Buffer.from(''),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(InvalidPhotoTypeError)
     }
   })
 })
