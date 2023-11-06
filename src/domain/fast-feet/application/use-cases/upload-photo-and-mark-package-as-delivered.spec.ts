@@ -6,6 +6,7 @@ import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { UploadPhotoAndMarkPackageAsDeliveredUseCase } from './upload-photo-and-mark-package-as-delivered'
 import { FakeUploader } from 'test/storage/fake-uploader'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -82,6 +83,31 @@ describe('Upload photo and mark package as delivered', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
+
+  it('should not be able to upload a photo and mark package as delivered when package status is not withdrew', async () => {
+    const deliveryPerson = makeDeliveryPerson()
+
+    const pkg = makePackage({
+      status: 'waiting',
+      deliveryPersonId: deliveryPerson.id,
+    })
+
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+    await inMemoryPackagesRepository.create(pkg)
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+      deliveryPersonId: deliveryPerson.id.toString(),
+      filename: 'delivered.png',
+      fileType: 'image/png',
+      body: Buffer.from(''),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(PackageStatusNotAllowedError)
     }
   })
 })
