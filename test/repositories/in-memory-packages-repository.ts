@@ -47,6 +47,8 @@ export class InMemoryPackagesRepository implements PackagesRepository {
     )
 
     this.items[itemIndex] = pkg
+
+    DomainEvents.dispatchEventsForAggregate(pkg.id)
   }
 
   async deleteManyByRecipientId(recipientId: string): Promise<void> {
