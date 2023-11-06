@@ -3,6 +3,7 @@ import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-rep
 import { makePackage } from 'test/factories/make-package'
 import { ReturnPackageUseCase } from './return-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -42,6 +43,17 @@ describe('Return package', () => {
           withdrewAt: expect.any(Date),
         }),
       )
+    }
+  })
+
+  it('should not be able to return a package that does not exist', async () => {
+    const result = await sut.execute({
+      id: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
