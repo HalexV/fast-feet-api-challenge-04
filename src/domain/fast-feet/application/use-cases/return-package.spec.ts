@@ -4,6 +4,7 @@ import { makePackage } from 'test/factories/make-package'
 import { ReturnPackageUseCase } from './return-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -54,6 +55,23 @@ describe('Return package', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
+
+  it('should not be able to return a package that has not status withdrew', async () => {
+    const pkg = makePackage({
+      status: 'posted',
+    })
+
+    await inMemoryPackagesRepository.create(pkg)
+
+    const result = await sut.execute({
+      id: pkg.id.toString(),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(PackageStatusNotAllowedError)
     }
   })
 })
