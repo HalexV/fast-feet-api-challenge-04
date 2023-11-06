@@ -29,7 +29,6 @@ export class OnPackageWithdrew implements EventHandler {
     const recipient = await this.recipientsRepository.findById(
       pkg.recipientId.toString(),
     )
-    console.log('asd')
 
     if (!recipient) return
     if (!pkg.deliveryPersonId) return
