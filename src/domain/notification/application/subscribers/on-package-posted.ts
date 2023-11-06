@@ -1,13 +1,11 @@
 import { DomainEvents } from '@/core/events/domain-events'
 import { EventHandler } from '@/core/events/event-handler'
-import { Injectable } from '@nestjs/common'
 import { PackagePostedEvent } from '@/domain/fast-feet/enterprise/events/package-posted-event'
 import { RegisterNotificationUseCase } from '../use-cases/register-notification'
 import { SendEmailNotificationUseCase } from '../use-cases/send-email-notification'
 import { RecipientsRepository } from '@/domain/fast-feet/application/repositories/recipients-repository'
 import { MakePackagePostedEmailHTML } from '../email/makePackagePostedEmailHTML'
 
-@Injectable()
 export class OnPackagePosted implements EventHandler {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,

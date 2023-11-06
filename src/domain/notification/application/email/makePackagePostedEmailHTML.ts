@@ -1,6 +1,6 @@
 import { Status } from '@/core/types/status'
 
-export interface HTMLProps {
+export interface PackagePostedHTMLProps {
   completeAddress: string
   packageDescription: string
   postedAt: Date
@@ -9,5 +9,5 @@ export interface HTMLProps {
 }
 
 export abstract class MakePackagePostedEmailHTML {
-  abstract execute(data: HTMLProps): string
+  abstract execute(data: PackagePostedHTMLProps): string
 }

@@ -1,5 +1,5 @@
 import {
-  HTMLProps,
+  PackagePostedHTMLProps,
   MakePackagePostedEmailHTML,
 } from '@/domain/notification/application/email/makePackagePostedEmailHTML'
 
@@ -12,7 +12,7 @@ export class FakeMakePackagePostedEmailHTML
     postedAt,
     recipientFirstName,
     status,
-  }: HTMLProps): string {
+  }: PackagePostedHTMLProps): string {
     return `
     <!DOCTYPE html>
     <html lang="en">

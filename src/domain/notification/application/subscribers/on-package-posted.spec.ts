@@ -17,7 +17,7 @@ import { FakeEmailer } from 'test/email/fake-emailer'
 import { FakeMakePackagePostedEmailHTML } from 'test/email/fake-make-package-posted-email-html'
 import { makeRecipient } from 'test/factories/make-recipient'
 import { makePackage } from 'test/factories/make-package'
-import { HTMLProps } from '../email/makePackagePostedEmailHTML'
+import { PackagePostedHTMLProps } from '../email/makePackagePostedEmailHTML'
 import { waitFor } from 'test/utils/wait-for'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
@@ -42,7 +42,10 @@ let sendEmailNotificationExecuteSpy: SpyInstance<
   Promise<void>
 >
 
-let fakeMakePackagePostedEmailHTMLExecuteSpy: SpyInstance<[HTMLProps], string>
+let fakeMakePackagePostedEmailHTMLExecuteSpy: SpyInstance<
+  [PackagePostedHTMLProps],
+  string
+>
 
 describe('On Package Posted', () => {
   beforeEach(() => {
