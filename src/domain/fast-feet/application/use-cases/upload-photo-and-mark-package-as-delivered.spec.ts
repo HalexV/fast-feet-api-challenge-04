@@ -5,6 +5,7 @@ import { makePackage } from 'test/factories/make-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { UploadPhotoAndMarkPackageAsDeliveredUseCase } from './upload-photo-and-mark-package-as-delivered'
 import { FakeUploader } from 'test/storage/fake-uploader'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -62,6 +63,25 @@ describe('Upload photo and mark package as delivered', () => {
           packageId: pkg.id,
         }),
       )
+    }
+  })
+
+  it('should not be able to upload a photo and mark package as delivered when package does not exist', async () => {
+    const deliveryPerson = makeDeliveryPerson()
+
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
+
+    const result = await sut.execute({
+      id: 'non-existent-id',
+      deliveryPersonId: deliveryPerson.id.toString(),
+      filename: 'delivered.png',
+      fileType: 'image/png',
+      body: Buffer.from(''),
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
