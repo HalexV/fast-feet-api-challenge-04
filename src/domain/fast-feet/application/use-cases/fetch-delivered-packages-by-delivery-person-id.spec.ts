@@ -9,6 +9,7 @@ import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipi
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from './fetch-delivered-packages-by-delivery-person-id'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -112,17 +113,17 @@ describe('Fetch delivered packages by delivery person', () => {
     }
   })
 
-  // it.skip('should not be able to fetch packages pending near delivery person when delivery person does not exist', async () => {
-  //   const result = await sut.execute({
-  //     page: 1,
-  //     deliveryPersonId: 'non-existent-id',
-  //   })
+  it('should not be able to fetch delivered packages by delivery person id when delivery person does not exist', async () => {
+    const result = await sut.execute({
+      page: 1,
+      deliveryPersonId: 'non-existent-id',
+    })
 
-  //   expect(result.isLeft()).toBeTruthy()
-  //   if (result.isLeft()) {
-  //     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
-  //   }
-  // })
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
 
   // it.skip('should be able to fetch paginated packages pending near delivery person', async () => {
   //   for (let i = 0; i < 2; i++) {
