@@ -13,7 +13,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Deve ser possível marcar uma encomenda como devolvida
 - [x] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 - [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
-- [] Deve ser possível listar as entregas de um usuário
+- [x] Deve ser possível listar as entregas de um usuário
 - [] Deve ser possível alterar a senha de um usuário
 
 ### Regras de negócio
@@ -24,4 +24,4 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [] Somente o admin pode alterar a senha de um usuário
-- [] Não deve ser possível um entregador listar as encomendas de outro entregador
+- [x] Não deve ser possível um entregador listar as encomendas de outro entregador
