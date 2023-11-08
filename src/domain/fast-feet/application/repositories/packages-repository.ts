@@ -9,9 +9,17 @@ export interface FindManyByAddressAndDeliveryPersonIdParams
   state: State
   district?: string
 }
+
+export interface FindManyDeliveredByDeliveryPersonIdParams
+  extends PaginationParams {
+  deliveryPersonId: string
+}
 export abstract class PackagesRepository {
   abstract findById(id: string): Promise<Package | null>
   abstract findMany(params: PaginationParams): Promise<Package[]>
+  abstract findManyDeliveredByDeliveryPersonId(
+    params: FindManyDeliveredByDeliveryPersonIdParams,
+  ): Promise<Package[]>
   abstract findManyPendingByAddressAndDeliveryPersonId(
     params: FindManyByAddressAndDeliveryPersonIdParams,
   ): Promise<Package[]>
