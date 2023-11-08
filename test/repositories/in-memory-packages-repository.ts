@@ -1,5 +1,6 @@
 import {
   FindManyByAddressAndDeliveryPersonIdParams,
+  FindManyDeliveredByDeliveryPersonIdParams,
   PackagesRepository,
 } from '@/domain/fast-feet/application/repositories/packages-repository'
 import { Package } from '@/domain/fast-feet/enterprise/entities/Package'
@@ -26,6 +27,26 @@ export class InMemoryPackagesRepository implements PackagesRepository {
 
   async findMany({ page }: PaginationParams): Promise<Package[]> {
     return this.items
+      .sort((a, b) => b.postedAt.getTime() - a.postedAt.getTime())
+      .slice((page - 1) * 20, page * 20)
+  }
+
+  async findManyDeliveredByDeliveryPersonId({
+    page,
+    deliveryPersonId,
+  }: FindManyDeliveredByDeliveryPersonIdParams): Promise<Package[]> {
+    return this.items
+      .filter((pkg) => {
+        if (pkg.status === 'delivered') {
+          if (pkg.deliveryPersonId) {
+            if (pkg.deliveryPersonId.toString() === deliveryPersonId) {
+              return true
+            }
+          }
+        }
+
+        return false
+      })
       .sort((a, b) => b.postedAt.getTime() - a.postedAt.getTime())
       .slice((page - 1) * 20, page * 20)
   }

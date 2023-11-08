@@ -319,7 +319,6 @@ describe('Fetch packages pending near delivery person', () => {
 
     expect(result.isRight()).toBeTruthy()
     if (result.isRight()) {
-      console.log(result.value.pkgs)
       expect(result.value.pkgs).toHaveLength(2)
     }
   })
