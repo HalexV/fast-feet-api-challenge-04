@@ -11,6 +11,7 @@ import { DeliveryPerson } from '../../enterprise/entities/DeliveryPerson'
 import { Recipient } from '../../enterprise/entities/Recipient'
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
@@ -266,6 +267,18 @@ describe('Fetch packages pending near delivery person', () => {
           description: 'Package 1',
         }),
       ])
+    }
+  })
+
+  it('should not be able to fetch packages pending near delivery person when delivery person does not exist', async () => {
+    const result = await sut.execute({
+      page: 1,
+      deliveryPersonId: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 
