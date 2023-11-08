@@ -125,43 +125,39 @@ describe('Fetch delivered packages by delivery person', () => {
     }
   })
 
-  // it.skip('should be able to fetch paginated packages pending near delivery person', async () => {
-  //   for (let i = 0; i < 2; i++) {
-  //     await inMemoryPackagesRepository.create(
-  //       makePackage({
-  //         status: 'waiting',
-  //         recipientId: recipient3.id,
-  //       }),
-  //     )
-  //   }
+  it('should be able to fetch paginated delivered packages by delivery person id', async () => {
+    const deliveryPerson = makeDeliveryPerson()
 
-  //   for (let i = 0; i < 10; i++) {
-  //     await inMemoryPackagesRepository.create(
-  //       makePackage({
-  //         status: 'waiting',
-  //         recipientId: recipient1.id,
-  //       }),
-  //     )
-  //   }
+    await inMemoryDeliveryPeopleRepository.create(deliveryPerson)
 
-  //   for (let i = 0; i < 12; i++) {
-  //     await inMemoryPackagesRepository.create(
-  //       makePackage({
-  //         status: 'waiting',
-  //         recipientId: recipient2.id,
-  //       }),
-  //     )
-  //   }
+    for (let i = 0; i < 2; i++) {
+      await inMemoryPackagesRepository.create(
+        makePackage({
+          status: 'delivered',
+          recipientId: new UniqueEntityId('1'),
+          deliveryPersonId: new UniqueEntityId('2'),
+        }),
+      )
+    }
 
-  //   const result = await sut.execute({
-  //     page: 2,
-  //     deliveryPersonId: deliveryPerson1.id.toString(),
-  //   })
+    for (let i = 0; i < 22; i++) {
+      await inMemoryPackagesRepository.create(
+        makePackage({
+          status: 'delivered',
+          recipientId: new UniqueEntityId('1'),
+          deliveryPersonId: deliveryPerson.id,
+        }),
+      )
+    }
 
-  //   expect(result.isRight()).toBeTruthy()
-  //   if (result.isRight()) {
-  //     console.log(result.value.pkgs)
-  //     expect(result.value.pkgs).toHaveLength(2)
-  //   }
-  // })
+    const result = await sut.execute({
+      page: 2,
+      deliveryPersonId: deliveryPerson.id.toString(),
+    })
+
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) {
+      expect(result.value.pkgs).toHaveLength(2)
+    }
+  })
 })
