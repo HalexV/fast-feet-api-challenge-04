@@ -6,8 +6,12 @@ import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { WithdrawPackageUseCase } from './withdraw-package'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let sut: WithdrawPackageUseCase
@@ -15,8 +19,14 @@ let sut: WithdrawPackageUseCase
 describe('Withdraw package', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
 

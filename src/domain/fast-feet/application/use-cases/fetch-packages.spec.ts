@@ -4,16 +4,27 @@ import { InMemoryPackagesRepository } from 'test/repositories/in-memory-packages
 import { InMemoryPhotosRepository } from 'test/repositories/in-memory-photos-repository'
 import { FetchPackagesUseCase } from './fetch-packages'
 import { makePackage } from 'test/factories/make-package'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
 let sut: FetchPackagesUseCase
 
 describe('Fetch packages', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
 
     sut = new FetchPackagesUseCase(inMemoryPackagesRepository)

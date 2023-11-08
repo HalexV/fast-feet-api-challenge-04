@@ -55,6 +55,7 @@ describe('On Package Returned', () => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository(

@@ -13,11 +13,12 @@ let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let sut: EditRecipientUseCase
 
-describe('Edit delivery person', () => {
+describe('Edit recipient', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
     inMemoryRecipientsRepository = new InMemoryRecipientsRepository(

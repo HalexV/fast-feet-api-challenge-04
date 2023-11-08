@@ -5,16 +5,26 @@ import { ReturnPackageUseCase } from './return-package'
 import { makeDeliveryPerson } from 'test/factories/make-delivery-person'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
 let sut: ReturnPackageUseCase
 
 describe('Return package', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
 
     sut = new ReturnPackageUseCase(inMemoryPackagesRepository)

@@ -9,8 +9,12 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { InvalidPhotoTypeError } from './errors/invalid-photo-type-error'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let fakeUploader: FakeUploader
@@ -19,8 +23,14 @@ let sut: UploadPhotoAndMarkPackageAsDeliveredUseCase
 describe('Upload photo and mark package as delivered', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
     fakeUploader = new FakeUploader()

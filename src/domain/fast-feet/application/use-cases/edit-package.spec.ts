@@ -23,6 +23,7 @@ describe('Edit package', () => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
     inMemoryDeliveryPeopleRepository = new InMemoryDeliveryPeopleRepository()
     inMemoryNotificationsRepository = new InMemoryNotificationsRepository()

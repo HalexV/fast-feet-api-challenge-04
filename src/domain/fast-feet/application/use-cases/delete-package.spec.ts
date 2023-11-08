@@ -4,16 +4,26 @@ import { makePackage } from 'test/factories/make-package'
 import { DeletePackageUseCase } from './delete-package'
 import { makePhoto } from 'test/factories/make-photo'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
 let sut: DeletePackageUseCase
 
 describe('Delete package', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryNotificationsRepository = new InMemoryNotificationsRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
 
     sut = new DeletePackageUseCase(inMemoryPackagesRepository)

@@ -4,16 +4,25 @@ import { makePackage } from 'test/factories/make-package'
 import { MarkPackageAsWaitingUseCase } from './mark-package-as-waiting'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
+let inMemoryNotificationsRepository: InMemoryNotificationsRepository
+let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryPackagesRepository: InMemoryPackagesRepository
 let sut: MarkPackageAsWaitingUseCase
 
 describe('Mark package as waiting', () => {
   beforeEach(() => {
     inMemoryPhotosRepository = new InMemoryPhotosRepository()
+    inMemoryRecipientsRepository = new InMemoryRecipientsRepository(
+      inMemoryPackagesRepository,
+      inMemoryNotificationsRepository,
+    )
     inMemoryPackagesRepository = new InMemoryPackagesRepository(
       inMemoryPhotosRepository,
+      inMemoryRecipientsRepository,
     )
 
     sut = new MarkPackageAsWaitingUseCase(inMemoryPackagesRepository)
