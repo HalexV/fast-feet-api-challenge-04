@@ -12,7 +12,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Deve ser possível marcar uma encomenda como entregue
 - [x] Deve ser possível marcar uma encomenda como devolvida
 - [x] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
-- [] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
+- [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 - [] Deve ser possível listar as entregas de um usuário
 - [] Deve ser possível alterar a senha de um usuário
 
