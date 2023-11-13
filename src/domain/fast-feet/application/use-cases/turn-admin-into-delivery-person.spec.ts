@@ -2,6 +2,7 @@ import { InMemoryDeliveryPeopleRepository } from 'test/repositories/in-memory-de
 import { TurnAdminIntoDeliveryPersonUseCase } from './turn-admin-into-delivery-person'
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository'
 import { makeAdmin } from 'test/factories/make-admin'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryDeliveryPeopleRepository: InMemoryDeliveryPeopleRepository
 let inMemoryAdminsRepository: InMemoryAdminsRepository
@@ -41,6 +42,17 @@ describe('Turn admin into delivery person', () => {
         password: admin.password,
         state: admin.state,
       })
+    }
+  })
+
+  it('should not be able to turn an admin into a delivery person when admin does not exist', async () => {
+    const result = await sut.execute({
+      adminId: 'non-existent-id',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     }
   })
 })
