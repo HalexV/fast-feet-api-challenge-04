@@ -24,6 +24,16 @@ export class InMemoryAdminsRepository implements AdminsRepository {
     return admin
   }
 
+  async findOne(): Promise<Admin | null> {
+    const admin = this.items[0]
+
+    if (!admin) {
+      return null
+    }
+
+    return admin
+  }
+
   async create(admin: Admin): Promise<void> {
     this.items.push(admin)
   }
