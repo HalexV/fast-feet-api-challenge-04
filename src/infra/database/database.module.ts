@@ -7,10 +7,11 @@ import {
 import { PgDriverService } from './pgDriver/pgDriver.service'
 import { DatabaseOptions } from './pgDriver/databaseOptions'
 import { Pool } from 'pg'
+import { AdminsRepository } from '@/domain/fast-feet/application/repositories/admins-repository'
+import { PgDriverAdminsRepository } from './pgDriver/repositories/pg-driver-admins-repository'
 
 @Global()
 @Module({
-  exports: [PgDriverService],
   providers: [
     {
       provide: CONNECTION_POOL,
@@ -22,6 +23,11 @@ import { Pool } from 'pg'
       },
     },
     PgDriverService,
+    {
+      provide: AdminsRepository,
+      useClass: PgDriverAdminsRepository,
+    },
   ],
+  exports: [PgDriverService, AdminsRepository],
 })
 export class DatabaseModule extends ConfigurableDatabaseModule {}
