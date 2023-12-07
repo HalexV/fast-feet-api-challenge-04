@@ -1,6 +1,7 @@
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { RegisterDefaultAdminUseCase } from './register-default-admin'
+import { makeAdmin } from 'test/factories/make-admin'
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository
 let fakeHasher: FakeHasher
@@ -28,6 +29,28 @@ describe('Register Default Admin', () => {
     expect(result.isRight()).toBeTruthy()
     if (result.isRight() && result.value) {
       expect(inMemoryAdminsRepository.items[0]).toEqual(result.value.admin)
+    }
+  })
+
+  it('should be able to do nothing when some admin exists', async () => {
+    const admin = makeAdmin()
+
+    await inMemoryAdminsRepository.create(admin)
+
+    const result = await sut.execute({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      cpf: '11122233304',
+      password: '12345678',
+      address: 'john doe street, 450',
+      district: 'center',
+      city: 'example city',
+      state: 'RO',
+    })
+
+    expect(result.isRight()).toBeTruthy()
+    if (result.isRight()) {
+      expect(result.value).toBeNull()
     }
   })
 })
