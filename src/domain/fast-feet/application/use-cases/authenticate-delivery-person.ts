@@ -3,6 +3,7 @@ import { HashComparer } from '../cryptography/hash-comparer'
 import { Encrypter } from '../cryptography/encrypter'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 import { DeliveryPeopleRepository } from '../repositories/delivery-people-repository'
+import { Role } from '@/core/types/role.enum'
 
 interface AuthenticateDeliveryPersonUseCaseRequest {
   cpf: string
@@ -44,6 +45,7 @@ export class AuthenticateDeliveryPersonUseCase {
 
     const accessToken = await this.encrypter.encrypt({
       sub: deliveryPerson.id.toString(),
+      roles: [Role.DeliveryPerson],
     })
 
     return right({

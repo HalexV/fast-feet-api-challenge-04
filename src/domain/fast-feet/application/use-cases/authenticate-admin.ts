@@ -3,6 +3,7 @@ import { AdminsRepository } from '../repositories/admins-repository'
 import { HashComparer } from '../cryptography/hash-comparer'
 import { Encrypter } from '../cryptography/encrypter'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
+import { Role } from '@/core/types/role.enum'
 
 interface AuthenticateAdminUseCaseRequest {
   cpf: string
@@ -44,6 +45,7 @@ export class AuthenticateAdminUseCase {
 
     const accessToken = await this.encrypter.encrypt({
       sub: admin.id.toString(),
+      roles: [Role.Admin],
     })
 
     return right({
