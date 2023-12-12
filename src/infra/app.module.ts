@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module'
 import { EnvService } from './env/env.service'
 import { CryptographyModule } from './cryptography/cryptography.module'
 import { RegisterDefaultAdminUseCase } from '@/domain/fast-feet/application/use-cases/register-default-admin'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { RegisterDefaultAdminUseCase } from '@/domain/fast-feet/application/use-
       }),
     }),
     CryptographyModule,
+    AuthModule,
   ],
   providers: [RegisterDefaultAdminUseCase],
 })
