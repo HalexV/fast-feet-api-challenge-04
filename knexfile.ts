@@ -8,6 +8,9 @@ const knexConfig: Knex.Config = {
   connection: {
     connectionString: process.env.POSTGRES_URL,
   },
+  migrations: {
+    schemaName: process.env.DATABASE_SCHEMA ?? 'public',
+  },
 }
 
 module.exports = knexConfig
