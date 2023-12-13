@@ -4,6 +4,7 @@ import { Admin } from '../../enterprise/entities/Admin'
 import { AdminsRepository } from '../repositories/admins-repository'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { AdminAlreadyExistsError } from './errors/admin-already-exists-error'
+import { Injectable } from '@nestjs/common'
 
 interface RegisterAdminUseCaseRequest {
   name: string
@@ -22,7 +23,7 @@ type RegisterAdminUseCaseResponse = Either<
     admin: Admin
   }
 >
-
+@Injectable()
 export class RegisterAdminUseCase {
   constructor(
     private readonly adminsRepository: AdminsRepository,
