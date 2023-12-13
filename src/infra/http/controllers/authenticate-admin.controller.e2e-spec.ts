@@ -51,15 +51,5 @@ describe('Authenticate Admin (E2E)', () => {
     expect(response.body).toEqual({
       access_token: expect.any(String),
     })
-
-    const response2 = await request(app.getHttpServer())
-      .post('/admin/test')
-      .set('Authorization', `Bearer ${response.body.access_token}`)
-      .send({
-        cpf: '00000000001',
-        password: '12345678',
-      })
-
-    console.log(response2)
   })
 })
