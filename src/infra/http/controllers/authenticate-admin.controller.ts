@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  HttpCode,
   Post,
   UnauthorizedException,
   UsePipes,
@@ -21,12 +22,13 @@ const authenticateAdminBodySchema = z.object({
 
 type AuthenticateAdminBodySchema = z.infer<typeof authenticateAdminBodySchema>
 
-@Controller('/admin/sessions')
+@Controller('/admins/sessions')
 @Public()
 export class AuthenticateAdminController {
   constructor(private readonly authenticateAdmin: AuthenticateAdminUseCase) {}
 
   @Post()
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateAdminBodySchema))
   @ApiBody({ type: [AuthenticateAdminDto] })
   async handle(@Body() body: AuthenticateAdminBodySchema) {

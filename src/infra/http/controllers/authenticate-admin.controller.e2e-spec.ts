@@ -34,20 +34,20 @@ describe('Authenticate Admin (E2E)', () => {
     await app.init()
   })
 
-  test('[POST] /admin/sessions', async () => {
+  test('[POST] /admins/sessions', async () => {
     await adminFactory.makePgDriverAdmin({
       cpf: '00000000001',
       password: await hash('12345678', 8),
     })
 
     const response = await request(app.getHttpServer())
-      .post('/admin/sessions')
+      .post('/admins/sessions')
       .send({
         cpf: '00000000001',
         password: '12345678',
       })
 
-    expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
       access_token: expect.any(String),
     })

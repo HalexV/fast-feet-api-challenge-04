@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  HttpCode,
   Post,
   UnauthorizedException,
   UsePipes,
@@ -31,6 +32,7 @@ export class AuthenticateDeliveryPersonController {
   ) {}
 
   @Post()
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateDeliveryPersonBodySchema))
   @ApiBody({ type: [AuthenticateDeliveryPersonDto] })
   async handle(@Body() body: AuthenticateDeliveryPersonBodySchema) {
