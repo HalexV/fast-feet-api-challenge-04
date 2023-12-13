@@ -21,7 +21,7 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
 - [] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 - [] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
-- [] Somente usuário do tipo admin pode registrar um usuário admin
+- [x] Somente usuário do tipo admin pode registrar um usuário admin
 - [x] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [] Somente o admin pode alterar a senha de um usuário
