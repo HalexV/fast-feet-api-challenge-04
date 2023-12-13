@@ -1,7 +1,9 @@
 import { Knex } from 'knex'
 import { config } from 'dotenv'
 
-config()
+if (!process.env.DATABASE_SCHEMA) {
+  config()
+}
 
 const schema = process.env.DATABASE_SCHEMA ?? 'public'
 
