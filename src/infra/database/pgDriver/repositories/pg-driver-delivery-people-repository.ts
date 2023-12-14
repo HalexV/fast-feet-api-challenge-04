@@ -92,7 +92,18 @@ export class PgDriverDeliveryPeopleRepository
   }
 
   async findById(id: string): Promise<DeliveryPerson | null> {
-    throw new Error('Method not implemented.')
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT * FROM "${this.schema}"."users" WHERE id=$1 LIMIT 1;
+    `,
+      [id],
+    )
+
+    const data = result.rows[0]
+
+    if (!data) return null
+
+    return PgDriverDeliveryPersonMapper.toDomain(data)
   }
 
   async findMany(params: PaginationParams): Promise<DeliveryPerson[]> {
