@@ -106,7 +106,16 @@ export class PgDriverDeliveryPeopleRepository
     return PgDriverDeliveryPersonMapper.toDomain(data)
   }
 
-  async findMany(params: PaginationParams): Promise<DeliveryPerson[]> {
-    throw new Error('Method not implemented.')
+  async findMany({ page }: PaginationParams): Promise<DeliveryPerson[]> {
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT * FROM "${this.schema}"."users" WHERE 'DELIVERY_PERSON' = ANY (roles) ORDER BY name ASC LIMIT 20 OFFSET $1;
+    `,
+      [(page - 1) * 20],
+    )
+
+    const data = result.rows
+
+    return data.map(PgDriverDeliveryPersonMapper.toDomain)
   }
 }
