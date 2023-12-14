@@ -6,6 +6,8 @@ import { AuthenticateDeliveryPersonController } from './controllers/authenticate
 import { AuthenticateDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/authenticate-delivery-person'
 import { RegisterAdminController } from './controllers/register-admin.controller'
 import { RegisterAdminUseCase } from '@/domain/fast-feet/application/use-cases/register-admin'
+import { RegisterDeliveryPersonController } from './controllers/register-delivery-person.controller'
+import { RegisterDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/register-delivery-person'
 
 @Module({
   imports: [CryptographyModule],
@@ -13,11 +15,13 @@ import { RegisterAdminUseCase } from '@/domain/fast-feet/application/use-cases/r
     AuthenticateAdminController,
     AuthenticateDeliveryPersonController,
     RegisterAdminController,
+    RegisterDeliveryPersonController,
   ],
   providers: [
     AuthenticateAdminUseCase,
     AuthenticateDeliveryPersonUseCase,
     RegisterAdminUseCase,
+    RegisterDeliveryPersonUseCase,
   ],
 })
 export class HttpModule {}

@@ -4,6 +4,7 @@ import { DeliveryPerson } from '../../enterprise/entities/DeliveryPerson'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { DeliveryPersonAlreadyExistsError } from './errors/delivery-person-already-exists-error'
 import { DeliveryPeopleRepository } from '../repositories/delivery-people-repository'
+import { Injectable } from '@nestjs/common'
 
 interface RegisterDeliveryPersonUseCaseRequest {
   name: string
@@ -22,7 +23,7 @@ type RegisterDeliveryPersonUseCaseResponse = Either<
     deliveryPerson: DeliveryPerson
   }
 >
-
+@Injectable()
 export class RegisterDeliveryPersonUseCase {
   constructor(
     private readonly deliveryPeopleRepository: DeliveryPeopleRepository,
