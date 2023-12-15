@@ -90,8 +90,8 @@ export class PgDriverAdminsRepository implements AdminsRepository {
         data.district,
         data.state,
         data.city,
-        data.createdAt,
-        data.updatedAt,
+        data.created_at,
+        data.updated_at,
         data.roles,
       ],
     )

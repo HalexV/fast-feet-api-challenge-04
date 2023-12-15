@@ -52,7 +52,7 @@ export class PgDriverDeliveryPeopleRepository
       $11,
       $12,
       $13
-    )
+    );
     `,
       [
         data.id,
@@ -64,16 +64,51 @@ export class PgDriverDeliveryPeopleRepository
         data.district,
         data.state,
         data.city,
-        data.createdAt,
-        data.updatedAt,
-        data.isActive,
+        data.created_at,
+        data.updated_at,
+        data.is_active,
         data.roles,
       ],
     )
   }
 
   async save(deliveryPerson: DeliveryPerson): Promise<void> {
-    throw new Error('Method not implemented.')
+    const data = PgDriverDeliveryPersonMapper.toPgDriver(deliveryPerson)
+
+    await this.pgDriver.runQuery(
+      `
+    UPDATE "${this.schema}"."users" SET 
+      name = $2,
+      email = $3,
+      cpf = $4,
+      password = $5,
+      address = $6,
+      district = $7,
+      state = $8,
+      city = $9,
+      created_at = $10,
+      updated_at = $11,
+      is_active = $12,
+      roles = $13
+      
+    WHERE id=$1;
+    `,
+      [
+        data.id,
+        data.name,
+        data.email,
+        data.cpf,
+        data.password,
+        data.address,
+        data.district,
+        data.state,
+        data.city,
+        data.created_at,
+        data.updated_at,
+        data.is_active,
+        data.roles,
+      ],
+    )
   }
 
   async findByCPF(cpf: string): Promise<DeliveryPerson | null> {

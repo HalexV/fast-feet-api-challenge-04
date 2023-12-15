@@ -14,9 +14,9 @@ interface PgDriverUser {
   district: string
   state: string
   city: string
-  createdAt: Date
-  updatedAt?: Date | null
-  isActive: boolean
+  created_at: Date
+  updated_at?: Date | null
+  is_active: boolean
   roles: role[]
 }
 
@@ -32,9 +32,9 @@ export class PgDriverDeliveryPersonMapper {
         district: raw.district,
         state: StateOptions[raw.state],
         city: raw.city,
-        createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt,
-        isActive: raw.isActive,
+        createdAt: raw.created_at,
+        updatedAt: raw.updated_at,
+        isActive: raw.is_active,
       },
       new UniqueEntityId(raw.id),
     )
@@ -51,9 +51,9 @@ export class PgDriverDeliveryPersonMapper {
       district: deliveryPerson.district,
       state: deliveryPerson.state,
       city: deliveryPerson.city,
-      createdAt: deliveryPerson.createdAt,
-      updatedAt: deliveryPerson.updatedAt,
-      isActive: deliveryPerson.isActive,
+      created_at: deliveryPerson.createdAt,
+      updated_at: deliveryPerson.updatedAt,
+      is_active: deliveryPerson.isActive,
       roles: ['DELIVERY_PERSON'],
     }
   }

@@ -14,8 +14,8 @@ interface PgDriverUser {
   district: string
   state: string
   city: string
-  createdAt: Date
-  updatedAt?: Date | null
+  created_at: Date
+  updated_at?: Date | null
   roles: role[]
 }
 
@@ -31,8 +31,8 @@ export class PgDriverAdminMapper {
         district: raw.district,
         state: StateOptions[raw.state],
         city: raw.city,
-        createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt,
+        createdAt: raw.created_at,
+        updatedAt: raw.updated_at,
       },
       new UniqueEntityId(raw.id),
     )
@@ -49,8 +49,8 @@ export class PgDriverAdminMapper {
       district: admin.district,
       state: admin.state,
       city: admin.city,
-      createdAt: admin.createdAt,
-      updatedAt: admin.updatedAt,
+      created_at: admin.createdAt,
+      updated_at: admin.updatedAt,
       roles: ['ADMIN'],
     }
   }
