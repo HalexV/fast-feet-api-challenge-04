@@ -20,6 +20,8 @@ import { RegisterRecipientController } from './controllers/register-recipient.co
 import { RegisterRecipientUseCase } from '@/domain/fast-feet/application/use-cases/register-recipient'
 import { GetRecipientController } from './controllers/get-recipient.controller'
 import { GetRecipientUseCase } from '@/domain/fast-feet/application/use-cases/get-recipient'
+import { FetchRecipientsController } from './controllers/fetch-recipients.controller'
+import { FetchRecipientsUseCase } from '@/domain/fast-feet/application/use-cases/fetch-recipients'
 
 @Module({
   imports: [CryptographyModule],
@@ -34,6 +36,7 @@ import { GetRecipientUseCase } from '@/domain/fast-feet/application/use-cases/ge
     EditAdminController,
     RegisterRecipientController,
     GetRecipientController,
+    FetchRecipientsController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -46,6 +49,7 @@ import { GetRecipientUseCase } from '@/domain/fast-feet/application/use-cases/ge
     EditAdminUseCase,
     RegisterRecipientUseCase,
     GetRecipientUseCase,
+    FetchRecipientsUseCase,
   ],
 })
 export class HttpModule {}
