@@ -4,6 +4,7 @@ import { EditAdminUseCase } from './edit-admin'
 import { InMemoryAdminsRepository } from 'test/repositories/in-memory-admins-repository'
 import { makeAdmin } from 'test/factories/make-admin'
 import { AdminAlreadyExistsError } from './errors/admin-already-exists-error'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 
 let inMemoryAdminsRepository: InMemoryAdminsRepository
 let fakeHasher: FakeHasher
@@ -22,7 +23,8 @@ describe('Edit admin', () => {
     inMemoryAdminsRepository.items.push(admin)
 
     const result = await sut.execute({
-      id: admin.id.toString(),
+      userId: admin.id.toString(),
+      adminId: admin.id.toString(),
       name: 'John Doe',
       cpf: admin.cpf,
       password: '12345678',
@@ -58,7 +60,8 @@ describe('Edit admin', () => {
     inMemoryAdminsRepository.items.push(admin2)
 
     const result = await sut.execute({
-      id: admin2.id.toString(),
+      userId: admin2.id.toString(),
+      adminId: admin2.id.toString(),
       name: 'John Doe',
       cpf: '00011122233',
       password: '12345678',
@@ -81,7 +84,8 @@ describe('Edit admin', () => {
     inMemoryAdminsRepository.items.push(admin)
 
     const result = await sut.execute({
-      id: 'non-existent-id',
+      userId: 'non-existent-id',
+      adminId: 'non-existent-id',
       name: 'John Doe',
       cpf: '00011122233',
       password: '12345678',
@@ -95,6 +99,30 @@ describe('Edit admin', () => {
     expect(result.isLeft()).toBeTruthy()
     if (result.isLeft()) {
       expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+    }
+  })
+
+  it('should not be able to an admin edit another admin', async () => {
+    const admin = makeAdmin()
+
+    inMemoryAdminsRepository.items.push(admin)
+
+    const result = await sut.execute({
+      userId: 'another-admin-user',
+      adminId: admin.id.toString(),
+      name: 'John Doe',
+      cpf: '00011122233',
+      password: '12345678',
+      email: 'johndoe@example.com',
+      address: 'john doe street',
+      district: 'center',
+      city: 'John Doe City',
+      state: 'AC',
+    })
+
+    expect(result.isLeft()).toBeTruthy()
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(NotAllowedError)
     }
   })
 })

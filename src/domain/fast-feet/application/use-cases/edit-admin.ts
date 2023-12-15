@@ -5,9 +5,11 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { Admin } from '../../enterprise/entities/Admin'
 import { AdminAlreadyExistsError } from './errors/admin-already-exists-error'
 import { AdminsRepository } from '../repositories/admins-repository'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 
 interface EditAdminUseCaseRequest {
-  id: string
+  userId: string
+  adminId: string
   name: string
   email: string
   cpf: string
@@ -19,7 +21,7 @@ interface EditAdminUseCaseRequest {
 }
 
 type EditAdminUseCaseResponse = Either<
-  ResourceNotFoundError | AdminAlreadyExistsError,
+  NotAllowedError | ResourceNotFoundError | AdminAlreadyExistsError,
   {
     admin: Admin
   }
@@ -32,7 +34,8 @@ export class EditAdminUseCase {
   ) {}
 
   async execute({
-    id,
+    userId,
+    adminId,
     name,
     email,
     cpf,
@@ -42,7 +45,11 @@ export class EditAdminUseCase {
     city,
     state,
   }: EditAdminUseCaseRequest): Promise<EditAdminUseCaseResponse> {
-    const admin = await this.adminsRepository.findById(id)
+    if (userId !== adminId) {
+      return left(new NotAllowedError())
+    }
+
+    const admin = await this.adminsRepository.findById(adminId)
 
     if (!admin) {
       return left(new ResourceNotFoundError())
