@@ -34,7 +34,7 @@ export class AuthenticateDeliveryPersonController {
   @Post()
   @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateDeliveryPersonBodySchema))
-  @ApiBody({ type: [AuthenticateDeliveryPersonDto] })
+  @ApiBody({ type: AuthenticateDeliveryPersonDto })
   async handle(@Body() body: AuthenticateDeliveryPersonBodySchema) {
     const { cpf, password } = body
 

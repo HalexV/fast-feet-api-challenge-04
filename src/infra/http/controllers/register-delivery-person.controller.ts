@@ -42,7 +42,7 @@ export class RegisterDeliveryPersonController {
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(registerDeliveryPersonBodySchema))
-  @ApiBody({ type: [RegisterDeliveryPersonDto] })
+  @ApiBody({ type: RegisterDeliveryPersonDto })
   async handle(@Body() body: RegisterDeliveryPersonBodySchema) {
     const { name, email, cpf, password, address, district, city, state } = body
 

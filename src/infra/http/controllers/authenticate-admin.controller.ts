@@ -30,7 +30,7 @@ export class AuthenticateAdminController {
   @Post()
   @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateAdminBodySchema))
-  @ApiBody({ type: [AuthenticateAdminDto] })
+  @ApiBody({ type: AuthenticateAdminDto })
   async handle(@Body() body: AuthenticateAdminBodySchema) {
     const { cpf, password } = body
 

@@ -37,7 +37,7 @@ export class RegisterRecipientController {
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(registerRecipientBodySchema))
-  @ApiBody({ type: [RegisterRecipientDto] })
+  @ApiBody({ type: RegisterRecipientDto })
   async handle(@Body() body: RegisterRecipientBodySchema) {
     const { name, email, address, district, city, state, zipcode } = body
 

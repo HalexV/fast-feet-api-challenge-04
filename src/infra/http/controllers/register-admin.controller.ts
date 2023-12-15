@@ -38,7 +38,7 @@ export class RegisterAdminController {
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(registerAdminBodySchema))
-  @ApiBody({ type: [RegisterAdminDto] })
+  @ApiBody({ type: RegisterAdminDto })
   async handle(@Body() body: RegisterAdminBodySchema) {
     const { name, email, cpf, password, address, district, city, state } = body
 
