@@ -3,6 +3,7 @@ import { Either, left, right } from '@/core/types/either'
 import { Recipient } from '../../enterprise/entities/Recipient'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { RecipientAlreadyExistsError } from './errors/recipient-already-exists-error'
+import { Injectable } from '@nestjs/common'
 
 interface RegisterRecipientUseCaseRequest {
   name: string
@@ -20,7 +21,7 @@ type RegisterRecipientUseCaseResponse = Either<
     recipient: Recipient
   }
 >
-
+@Injectable()
 export class RegisterRecipientUseCase {
   constructor(private readonly recipientsRepository: RecipientsRepository) {}
 
