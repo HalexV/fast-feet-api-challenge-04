@@ -6,6 +6,7 @@ import { Admin } from '../../enterprise/entities/Admin'
 import { AdminAlreadyExistsError } from './errors/admin-already-exists-error'
 import { AdminsRepository } from '../repositories/admins-repository'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
 interface EditAdminUseCaseRequest {
   userId: string
@@ -26,7 +27,7 @@ type EditAdminUseCaseResponse = Either<
     admin: Admin
   }
 >
-
+@Injectable()
 export class EditAdminUseCase {
   constructor(
     private readonly adminsRepository: AdminsRepository,

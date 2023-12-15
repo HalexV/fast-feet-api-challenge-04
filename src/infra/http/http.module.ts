@@ -14,6 +14,8 @@ import { FetchDeliveryPeopleController } from './controllers/fetch-delivery-peop
 import { FetchDeliveryPeopleUseCase } from '@/domain/fast-feet/application/use-cases/fetch-delivery-people'
 import { EditDeliveryPersonController } from './controllers/edit-delivery-person.controller'
 import { EditDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/edit-delivery-person'
+import { EditAdminController } from './controllers/edit-admin.controller'
+import { EditAdminUseCase } from '@/domain/fast-feet/application/use-cases/edit-admin'
 
 @Module({
   imports: [CryptographyModule],
@@ -25,6 +27,7 @@ import { EditDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-ca
     GetDeliveryPersonController,
     FetchDeliveryPeopleController,
     EditDeliveryPersonController,
+    EditAdminController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -34,6 +37,7 @@ import { EditDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-ca
     GetDeliveryPersonUseCase,
     FetchDeliveryPeopleUseCase,
     EditDeliveryPersonUseCase,
+    EditAdminUseCase,
   ],
 })
 export class HttpModule {}
