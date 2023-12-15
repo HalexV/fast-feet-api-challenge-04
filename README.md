@@ -26,4 +26,4 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
 - [x] Somente o admin pode alterar a senha de um usuário
 - [x] Não deve ser possível um entregador listar as encomendas de outro entregador
-- [] Somente o próprio admin pode editar os seus próprios dados. Um admin não pode alterar os dados de outro admin.
+- [x] Somente o próprio admin pode editar os seus próprios dados. Um admin não pode alterar os dados de outro admin.
