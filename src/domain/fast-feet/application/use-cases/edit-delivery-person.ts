@@ -5,6 +5,7 @@ import { HashGenerator } from '../cryptography/hash-generator'
 import { DeliveryPeopleRepository } from '../repositories/delivery-people-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { DeliveryPersonAlreadyExistsError } from './errors/delivery-person-already-exists-error'
+import { Injectable } from '@nestjs/common'
 
 interface EditDeliveryPersonUseCaseRequest {
   id: string
@@ -25,7 +26,7 @@ type EditDeliveryPersonUseCaseResponse = Either<
     deliveryPerson: DeliveryPerson
   }
 >
-
+@Injectable()
 export class EditDeliveryPersonUseCase {
   constructor(
     private readonly deliveryPeopleRepository: DeliveryPeopleRepository,
