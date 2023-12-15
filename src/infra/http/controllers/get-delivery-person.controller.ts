@@ -12,7 +12,7 @@ import { Role } from '@/core/types/role.enum'
 import { GetDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/get-delivery-person'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { DeliveryPersonPresenter } from '../presenters/delivery-person-presenter'
-import { DeliveryPersonResponseModel } from './models/responses/delivery-person-response-model'
+import { GetDeliveryPersonResponseModel } from './models/responses/get-delivery-person-response-model'
 
 @Controller('/delivery-people/:id')
 @Roles(Role.Admin)
@@ -22,7 +22,7 @@ export class GetDeliveryPersonController {
   @Get()
   @HttpCode(200)
   @ApiParam({ name: 'id', type: 'string' })
-  @ApiOkResponse({ type: DeliveryPersonResponseModel })
+  @ApiOkResponse({ type: GetDeliveryPersonResponseModel })
   async handle(@Param('id') id: string) {
     const result = await this.getDeliveryPerson.execute({
       id,

@@ -11,8 +11,8 @@ import { Roles } from '@/infra/auth/roles.decorator'
 import { Role } from '@/core/types/role.enum'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { GetRecipientUseCase } from '@/domain/fast-feet/application/use-cases/get-recipient'
-import { RecipientResponseModel } from './models/responses/recipient-response-model'
 import { RecipientPresenter } from '../presenters/recipient-presenter'
+import { GetRecipientResponseModel } from './models/responses/get-recipient-response-model'
 
 @Controller('/recipients/:id')
 @Roles(Role.Admin)
@@ -22,7 +22,7 @@ export class GetRecipientController {
   @Get()
   @HttpCode(200)
   @ApiParam({ name: 'id', type: 'string' })
-  @ApiOkResponse({ type: RecipientResponseModel })
+  @ApiOkResponse({ type: GetRecipientResponseModel })
   async handle(@Param('id') id: string) {
     const result = await this.getRecipient.execute({
       id,

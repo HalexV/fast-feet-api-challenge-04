@@ -11,9 +11,10 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { WrongCredentialsError } from '@/domain/fast-feet/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/public.decorator'
-import { ApiBody } from '@nestjs/swagger'
+import { ApiBody, ApiOkResponse } from '@nestjs/swagger'
 import { AuthenticateDeliveryPersonDto } from './dtos/authenticate-delivery-person.dto'
 import { AuthenticateDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/authenticate-delivery-person'
+import { AuthenticateResponseModel } from './models/responses/authenticate-response-model'
 
 const authenticateDeliveryPersonBodySchema = z.object({
   cpf: z.string(),
@@ -35,6 +36,7 @@ export class AuthenticateDeliveryPersonController {
   @HttpCode(200)
   @UsePipes(new ZodValidationPipe(authenticateDeliveryPersonBodySchema))
   @ApiBody({ type: AuthenticateDeliveryPersonDto })
+  @ApiOkResponse({ type: AuthenticateResponseModel })
   async handle(@Body() body: AuthenticateDeliveryPersonBodySchema) {
     const { cpf, password } = body
 
