@@ -12,7 +12,7 @@ import { DeliveryPersonPresenter } from '../presenters/delivery-person-presenter
 import { FetchDeliveryPeopleUseCase } from '@/domain/fast-feet/application/use-cases/fetch-delivery-people'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { FetchDeliveryPersonResponseModel } from './models/responses/fetch-delivery-person-response-model'
+import { FetchDeliveryPeopleResponseModel } from './models/responses/fetch-delivery-people-response-model'
 
 const pageQueryParamSchema = z
   .string()
@@ -35,7 +35,7 @@ export class FetchDeliveryPeopleController {
   @Get()
   @HttpCode(200)
   @ApiQuery({ name: 'page', type: 'string' })
-  @ApiOkResponse({ type: FetchDeliveryPersonResponseModel })
+  @ApiOkResponse({ type: FetchDeliveryPeopleResponseModel })
   async handle(@Query('page', queryValidationPipe) page: PageQueryParamSchema) {
     const result = await this.fetchDeliveryPeople.execute({
       page,
