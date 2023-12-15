@@ -14,15 +14,16 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 - [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
 - [x] Deve ser possível listar as entregas de um usuário
-- [] Deve ser possível alterar a senha de um usuário
+- [x] Deve ser possível alterar a senha de um usuário
 
 ### Regras de negócio
 
 - [] Somente usuário do tipo admin pode realizar operações de CRUD nas encomendas
-- [] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
+- [x] Somente usuário do tipo admin pode realizar operações de CRUD dos entregadores
 - [] Somente usuário do tipo admin pode realizar operações de CRUD dos destinatários
 - [x] Somente usuário do tipo admin pode registrar um usuário admin
 - [x] Para marcar uma encomenda como entregue é obrigatório o envio de uma foto
 - [x] Somente o entregador que retirou a encomenda pode marcar ela como entregue
-- [] Somente o admin pode alterar a senha de um usuário
+- [x] Somente o admin pode alterar a senha de um usuário
 - [x] Não deve ser possível um entregador listar as encomendas de outro entregador
+- [] Somente o próprio admin pode editar os seus próprios dados. Um admin não pode alterar os dados de outro admin.
