@@ -25,7 +25,9 @@ export class RemoveRecipientUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const pkg = await this.packagesRepository.findSomeNotDelivered()
+    const pkg = await this.packagesRepository.findSomeNotDeliveredByRecipientId(
+      recipient.id.toString(),
+    )
 
     if (pkg) {
       return left(

@@ -111,9 +111,14 @@ export class InMemoryPackagesRepository implements PackagesRepository {
       .slice((page - 1) * 20, page * 20)
   }
 
-  async findSomeNotDelivered(): Promise<Package | null> {
+  async findSomeNotDeliveredByRecipientId(
+    recipientId: string,
+  ): Promise<Package | null> {
     const pkg = this.items.find(
-      (pkg) => pkg.status !== 'delivered' && pkg.deliveredAt == null,
+      (pkg) =>
+        pkg.status !== 'delivered' &&
+        pkg.deliveredAt == null &&
+        pkg.recipientId.toString() === recipientId,
     )
 
     if (!pkg) {

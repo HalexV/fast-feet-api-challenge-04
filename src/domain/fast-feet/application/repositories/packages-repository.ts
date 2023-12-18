@@ -23,7 +23,9 @@ export abstract class PackagesRepository {
   abstract findManyPendingByAddressAndDeliveryPersonId(
     params: FindManyByAddressAndDeliveryPersonIdParams,
   ): Promise<Package[]>
-  abstract findSomeNotDelivered(): Promise<Package | null>
+  abstract findSomeNotDeliveredByRecipientId(
+    recipientId: string,
+  ): Promise<Package | null>
   abstract create(pkg: Package): Promise<void>
   abstract save(pkg: Package): Promise<void>
   abstract deleteManyByRecipientId(recipientId: string): Promise<void>
