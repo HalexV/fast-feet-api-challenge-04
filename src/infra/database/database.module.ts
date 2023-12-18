@@ -13,6 +13,8 @@ import { DeliveryPeopleRepository } from '@/domain/fast-feet/application/reposit
 import { PgDriverDeliveryPeopleRepository } from './pgDriver/repositories/pg-driver-delivery-people-repository'
 import { RecipientsRepository } from '@/domain/fast-feet/application/repositories/recipients-repository'
 import { PgDriverRecipientsRepository } from './pgDriver/repositories/pg-driver-recipients-repository'
+import { PackagesRepository } from '@/domain/fast-feet/application/repositories/packages-repository'
+import { PgDriverPackagesRepository } from './pgDriver/repositories/pg-driver-packages-repository'
 
 @Global()
 @Module({
@@ -39,12 +41,17 @@ import { PgDriverRecipientsRepository } from './pgDriver/repositories/pg-driver-
       provide: RecipientsRepository,
       useClass: PgDriverRecipientsRepository,
     },
+    {
+      provide: PackagesRepository,
+      useClass: PgDriverPackagesRepository,
+    },
   ],
   exports: [
     PgDriverService,
     AdminsRepository,
     DeliveryPeopleRepository,
     RecipientsRepository,
+    PackagesRepository,
   ],
 })
 export class DatabaseModule extends ConfigurableDatabaseModule {}
