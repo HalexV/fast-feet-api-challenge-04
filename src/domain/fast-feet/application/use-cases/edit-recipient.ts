@@ -4,6 +4,7 @@ import { Recipient } from '../../enterprise/entities/Recipient'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { RecipientAlreadyExistsError } from './errors/recipient-already-exists-error'
 import { RecipientsRepository } from '../repositories/recipients-repository'
+import { Injectable } from '@nestjs/common'
 
 interface EditRecipientUseCaseRequest {
   id: string
@@ -22,7 +23,7 @@ type EditRecipientUseCaseResponse = Either<
     recipient: Recipient
   }
 >
-
+@Injectable()
 export class EditRecipientUseCase {
   constructor(private readonly recipientsRepository: RecipientsRepository) {}
 
