@@ -3,13 +3,14 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { PackagesRepository } from '../repositories/packages-repository'
 import { RemoveRecipientNotAllowedError } from './errors/remove-recipient-not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
 interface RemoveRecipientUseCaseRequest {
   id: string
 }
 
 type RemoveRecipientUseCaseResponse = Either<ResourceNotFoundError, null>
-
+@Injectable()
 export class RemoveRecipientUseCase {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,
