@@ -18,3 +18,11 @@ export const StatusOptions: {
   delivered: 'delivered',
   returned: 'returned',
 }
+
+export const StatusArr = [
+  'posted',
+  'waiting',
+  'withdrew',
+  'delivered',
+  'returned',
+] as const

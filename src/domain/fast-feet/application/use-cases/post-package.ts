@@ -4,6 +4,7 @@ import { PackagesRepository } from '../repositories/packages-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Injectable } from '@nestjs/common'
 
 interface PostPackageUseCaseRequest {
   description: string
@@ -16,7 +17,7 @@ type PostPackageUseCaseResponse = Either<
     pkg: Package
   }
 >
-
+@Injectable()
 export class PostPackageUseCase {
   constructor(
     private readonly packagesRepository: PackagesRepository,

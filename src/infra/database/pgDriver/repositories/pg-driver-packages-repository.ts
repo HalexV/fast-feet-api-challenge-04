@@ -23,7 +23,18 @@ export class PgDriverPackagesRepository implements PackagesRepository {
   }
 
   async findById(id: string): Promise<Package | null> {
-    throw new Error('Method not implemented.')
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT * FROM "${this.schema}"."packages" WHERE id=$1 LIMIT 1;
+    `,
+      [id],
+    )
+
+    const data = result.rows[0]
+
+    if (!data) return null
+
+    return PgDriverPackageMapper.toDomain(data)
   }
 
   async findMany(params: PaginationParams): Promise<Package[]> {
@@ -60,11 +71,75 @@ export class PgDriverPackagesRepository implements PackagesRepository {
   }
 
   async create(pkg: Package): Promise<void> {
-    throw new Error('Method not implemented.')
+    const data = PgDriverPackageMapper.toPgDriver(pkg)
+
+    await this.pgDriver.runQuery(
+      `
+    INSERT INTO "${this.schema}"."packages" (
+      id,
+      description,
+      status,
+      recipient_id,
+      delivery_person_id,
+      posted_at,
+      withdrew_at,
+      delivered_at,
+      updated_at
+    ) VALUES (
+      $1,
+      $2,
+      $3,
+      $4,
+      $5,
+      $6,
+      $7,
+      $8,
+      $9
+    );
+    `,
+      [
+        data.id,
+        data.description,
+        data.status,
+        data.recipient_id,
+        data.delivery_person_id,
+        data.posted_at,
+        data.withdrew_at,
+        data.delivered_at,
+        data.updated_at,
+      ],
+    )
   }
 
   async save(pkg: Package): Promise<void> {
-    throw new Error('Method not implemented.')
+    const data = PgDriverPackageMapper.toPgDriver(pkg)
+
+    await this.pgDriver.runQuery(
+      `
+    UPDATE "${this.schema}"."packages" SET 
+      description = $2,
+      status = $3,
+      recipient_id = $4,
+      delivery_person_id = $5,
+      posted_at = $6,
+      withdrew_at = $7,
+      delivered_at = $8,
+      updated_at = $9,
+      
+    WHERE id=$1;
+    `,
+      [
+        data.id,
+        data.description,
+        data.status,
+        data.recipient_id,
+        data.delivery_person_id,
+        data.posted_at,
+        data.withdrew_at,
+        data.delivered_at,
+        data.updated_at,
+      ],
+    )
   }
 
   async deleteManyByRecipientId(recipientId: string): Promise<void> {
@@ -72,6 +147,11 @@ export class PgDriverPackagesRepository implements PackagesRepository {
   }
 
   async delete(pkg: Package): Promise<void> {
-    throw new Error('Method not implemented.')
+    await this.pgDriver.runQuery(
+      `
+    DELETE FROM "${this.schema}"."packages" WHERE id=$1;
+    `,
+      [pkg.id.toString()],
+    )
   }
 }
