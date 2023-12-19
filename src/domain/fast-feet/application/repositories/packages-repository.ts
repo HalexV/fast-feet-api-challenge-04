@@ -3,7 +3,7 @@ import { Package } from '../../enterprise/entities/Package'
 import { State } from '@/core/types/state'
 import { PackageWithRecipient } from '../../enterprise/entities/value-objects/package-with-recipient'
 
-export interface FindManyByAddressAndDeliveryPersonIdParams
+export interface FindManyByAddressAndDeliveryPersonIdWithRecipientParams
   extends PaginationParams {
   deliveryPersonId: string
   city: string
@@ -27,9 +27,9 @@ export abstract class PackagesRepository {
   abstract findManyDeliveredByDeliveryPersonId(
     params: FindManyDeliveredByDeliveryPersonIdParams,
   ): Promise<Package[]>
-  abstract findManyPendingByAddressAndDeliveryPersonId(
-    params: FindManyByAddressAndDeliveryPersonIdParams,
-  ): Promise<Package[]>
+  abstract findManyPendingByAddressAndDeliveryPersonIdWithRecipient(
+    params: FindManyByAddressAndDeliveryPersonIdWithRecipientParams,
+  ): Promise<PackageWithRecipient[]>
   abstract findSomeNotDeliveredByRecipientId(
     recipientId: string,
   ): Promise<Package | null>

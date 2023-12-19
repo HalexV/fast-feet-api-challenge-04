@@ -71,24 +71,28 @@ describe('Fetch packages pending near delivery person', () => {
       city: 'Colorado do Oeste',
       state: 'RO',
       district: 'Center',
+      name: 'John Doe',
     })
 
     recipient2 = makeRecipient({
       city: 'Colorado do Oeste',
       state: 'RO',
       district: 'South Blue',
+      name: 'Jerry Doe',
     })
 
     recipient3 = makeRecipient({
       city: 'Vilhena',
       state: 'RO',
       district: 'Water Seven',
+      name: 'Larry Doe',
     })
 
     recipient4 = makeRecipient({
       city: 'Vilhena',
       state: 'RR',
       district: 'Water Seven',
+      name: 'Barry doe',
     })
 
     await inMemoryDeliveryPeopleRepository.create(deliveryPerson1)
@@ -218,15 +222,19 @@ describe('Fetch packages pending near delivery person', () => {
       expect(result1.value.pkgs).toEqual([
         expect.objectContaining({
           description: 'Package 5',
+          recipient: 'Jerry Doe',
         }),
         expect.objectContaining({
           description: 'Package 4',
+          recipient: 'Jerry Doe',
         }),
         expect.objectContaining({
           description: 'Package 2',
+          recipient: 'John Doe',
         }),
         expect.objectContaining({
           description: 'Package 1',
+          recipient: 'John Doe',
         }),
       ])
     }
@@ -241,9 +249,11 @@ describe('Fetch packages pending near delivery person', () => {
       expect(result2.value.pkgs).toEqual([
         expect.objectContaining({
           description: 'Package 8',
+          recipient: 'Larry Doe',
         }),
         expect.objectContaining({
           description: 'Package 7',
+          recipient: 'Larry Doe',
         }),
       ])
     }
@@ -258,15 +268,19 @@ describe('Fetch packages pending near delivery person', () => {
       expect(result3.value.pkgs).toEqual([
         expect.objectContaining({
           description: 'Package 6',
+          recipient: 'Jerry Doe',
         }),
         expect.objectContaining({
           description: 'Package 4',
+          recipient: 'Jerry Doe',
         }),
         expect.objectContaining({
           description: 'Package 3',
+          recipient: 'John Doe',
         }),
         expect.objectContaining({
           description: 'Package 1',
+          recipient: 'John Doe',
         }),
       ])
     }
