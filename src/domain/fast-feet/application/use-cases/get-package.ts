@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/types/either'
-import { Package } from '../../enterprise/entities/Package'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackagesRepository } from '../repositories/packages-repository'
+import { PackageWithRecipient } from '../../enterprise/entities/value-objects/package-with-recipient'
 
 interface GetPackageUseCaseRequest {
   id: string
@@ -10,7 +10,7 @@ interface GetPackageUseCaseRequest {
 type GetPackageUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    pkg: Package
+    pkg: PackageWithRecipient
   }
 >
 
@@ -20,7 +20,7 @@ export class GetPackageUseCase {
   async execute({
     id,
   }: GetPackageUseCaseRequest): Promise<GetPackageUseCaseResponse> {
-    const pkg = await this.packagesRepository.findById(id)
+    const pkg = await this.packagesRepository.findByIdWithRecipient(id)
 
     if (!pkg) {
       return left(new ResourceNotFoundError())

@@ -5,6 +5,7 @@ import { makePackage } from 'test/factories/make-package'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
+import { makeRecipient } from 'test/factories/make-recipient'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
@@ -28,8 +29,15 @@ describe('Get package', () => {
   })
 
   it('should be able to get a package', async () => {
+    const recipient = makeRecipient({
+      name: 'John Doe',
+    })
+
+    await inMemoryRecipientsRepository.create(recipient)
+
     const pkg = makePackage({
       description: 'Test description',
+      recipientId: recipient.id,
     })
 
     await inMemoryPackagesRepository.create(pkg)
@@ -42,6 +50,7 @@ describe('Get package', () => {
     if (result.isRight()) {
       expect(result.value.pkg).toMatchObject({
         description: 'Test description',
+        recipient: 'John Doe',
       })
     }
   })

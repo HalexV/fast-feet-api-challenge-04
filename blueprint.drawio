@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="r89aeUUbSYoEcmXRv9Xf" name="Page-1">
-        <mxGraphModel dx="2631" dy="843" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2631" dy="873" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -66,8 +66,8 @@
                 <mxCell id="37" value="&lt;div style=&quot;&quot;&gt;O filtro será baseado na string de cidade de um estado e o bairro que será opcional&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="-594" y="1324" width="396" height="32" as="geometry"/>
                 </mxCell>
-                <mxCell id="38" value="&lt;div style=&quot;&quot;&gt;Na listagem, os pacotes irão vir com todos os seus dados.&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" parent="1" vertex="1">
-                    <mxGeometry x="-594" y="1376" width="396" height="32" as="geometry"/>
+                <mxCell id="38" value="&lt;div style=&quot;&quot;&gt;Nas listagens para os entregadores, os pacotes irão vir com os dados agrupados por destinatário incluindo os dados do destinatário para a funcionalidade de ver os detalhes do pacote.&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="-594" y="1376" width="396" height="55" as="geometry"/>
                 </mxCell>
                 <mxCell id="39" value="&lt;div style=&quot;&quot;&gt;Caso de uso de confirmar deve receber a foto e confirmar a entrega&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="-94" y="1068" width="396" height="32" as="geometry"/>

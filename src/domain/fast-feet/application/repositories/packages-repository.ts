@@ -1,6 +1,7 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Package } from '../../enterprise/entities/Package'
 import { State } from '@/core/types/state'
+import { PackageWithRecipient } from '../../enterprise/entities/value-objects/package-with-recipient'
 
 export interface FindManyByAddressAndDeliveryPersonIdParams
   extends PaginationParams {
@@ -16,6 +17,9 @@ export interface FindManyDeliveredByDeliveryPersonIdParams
 }
 export abstract class PackagesRepository {
   abstract findById(id: string): Promise<Package | null>
+  abstract findByIdWithRecipient(
+    id: string,
+  ): Promise<PackageWithRecipient | null>
   abstract findMany(params: PaginationParams): Promise<Package[]>
   abstract findManyDeliveredByDeliveryPersonId(
     params: FindManyDeliveredByDeliveryPersonIdParams,

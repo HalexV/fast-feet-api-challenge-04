@@ -8,6 +8,7 @@ import { InMemoryPhotosRepository } from './in-memory-photos-repository'
 import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { InMemoryRecipientsRepository } from './in-memory-recipients-repository'
+import { PackageWithRecipient } from '@/domain/fast-feet/enterprise/entities/value-objects/package-with-recipient'
 
 export class InMemoryPackagesRepository implements PackagesRepository {
   constructor(
@@ -23,6 +24,42 @@ export class InMemoryPackagesRepository implements PackagesRepository {
     if (!pkg) return null
 
     return pkg
+  }
+
+  async findByIdWithRecipient(
+    id: string,
+  ): Promise<PackageWithRecipient | null> {
+    const pkg = this.items.find((pkg) => pkg.id.toString() === id)
+
+    if (!pkg) return null
+
+    const recipient = this.recipientsRepository.items.find(
+      (recipient) => recipient.id === pkg.recipientId,
+    )
+
+    if (!recipient) {
+      throw new Error(
+        `Recipient with ID ${pkg.recipientId.toString()} does not exist.`,
+      )
+    }
+
+    return PackageWithRecipient.create({
+      packageId: pkg.id,
+      description: pkg.description,
+      postedAt: pkg.postedAt,
+      recipientId: pkg.recipientId,
+      status: pkg.status,
+      deliveredAt: pkg.deliveredAt,
+      deliveryPersonId: pkg.deliveryPersonId,
+      withdrewAt: pkg.withdrewAt,
+      updatedAt: pkg.updatedAt,
+      recipient: recipient.name,
+      address: recipient.address,
+      city: recipient.city,
+      district: recipient.district,
+      state: recipient.state,
+      zipcode: recipient.zipcode,
+    })
   }
 
   async findMany({ page }: PaginationParams): Promise<Package[]> {
