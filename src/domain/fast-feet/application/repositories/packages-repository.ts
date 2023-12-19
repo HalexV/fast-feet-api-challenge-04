@@ -11,7 +11,7 @@ export interface FindManyByAddressAndDeliveryPersonIdWithRecipientParams
   district?: string
 }
 
-export interface FindManyDeliveredByDeliveryPersonIdParams
+export interface FindManyDeliveredByDeliveryPersonIdWithRecipientParams
   extends PaginationParams {
   deliveryPersonId: string
 }
@@ -24,9 +24,9 @@ export abstract class PackagesRepository {
   abstract findManyWithRecipient(
     params: PaginationParams,
   ): Promise<PackageWithRecipient[]>
-  abstract findManyDeliveredByDeliveryPersonId(
-    params: FindManyDeliveredByDeliveryPersonIdParams,
-  ): Promise<Package[]>
+  abstract findManyDeliveredByDeliveryPersonIdWithRecipient(
+    params: FindManyDeliveredByDeliveryPersonIdWithRecipientParams,
+  ): Promise<PackageWithRecipient[]>
   abstract findManyPendingByAddressAndDeliveryPersonIdWithRecipient(
     params: FindManyByAddressAndDeliveryPersonIdWithRecipientParams,
   ): Promise<PackageWithRecipient[]>

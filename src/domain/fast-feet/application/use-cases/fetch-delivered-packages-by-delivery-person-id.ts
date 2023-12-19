@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/core/types/either'
-import { Package } from '../../enterprise/entities/Package'
 import { PackagesRepository } from '../repositories/packages-repository'
 import { DeliveryPeopleRepository } from '../repositories/delivery-people-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { PackageWithRecipient } from '../../enterprise/entities/value-objects/package-with-recipient'
 
 interface FetchDeliveredPackagesByDeliveryPersonIdUseCaseRequest {
   page: number
@@ -12,7 +12,7 @@ interface FetchDeliveredPackagesByDeliveryPersonIdUseCaseRequest {
 type FetchDeliveredPackagesByDeliveryPersonIdUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    pkgs: Package[]
+    pkgs: PackageWithRecipient[]
   }
 >
 
@@ -34,10 +34,12 @@ export class FetchDeliveredPackagesByDeliveryPersonIdUseCase {
     }
 
     const pkgs =
-      await this.packagesRepository.findManyDeliveredByDeliveryPersonId({
-        page,
-        deliveryPersonId: deliveryPerson.id.toString(),
-      })
+      await this.packagesRepository.findManyDeliveredByDeliveryPersonIdWithRecipient(
+        {
+          page,
+          deliveryPersonId: deliveryPerson.id.toString(),
+        },
+      )
 
     return right({
       pkgs,
