@@ -68,6 +68,43 @@ export class InMemoryPackagesRepository implements PackagesRepository {
       .slice((page - 1) * 20, page * 20)
   }
 
+  async findManyWithRecipient({
+    page,
+  }: PaginationParams): Promise<PackageWithRecipient[]> {
+    return this.items
+      .sort((a, b) => b.postedAt.getTime() - a.postedAt.getTime())
+      .slice((page - 1) * 20, page * 20)
+      .map((pkg) => {
+        const recipient = this.recipientsRepository.items.find(
+          (recipient) => recipient.id === pkg.recipientId,
+        )
+
+        if (!recipient) {
+          throw new Error(
+            `Recipient with ID ${pkg.recipientId.toString()} does not exist.`,
+          )
+        }
+
+        return PackageWithRecipient.create({
+          packageId: pkg.id,
+          description: pkg.description,
+          postedAt: pkg.postedAt,
+          recipientId: pkg.recipientId,
+          status: pkg.status,
+          deliveredAt: pkg.deliveredAt,
+          deliveryPersonId: pkg.deliveryPersonId,
+          withdrewAt: pkg.withdrewAt,
+          updatedAt: pkg.updatedAt,
+          recipient: recipient.name,
+          address: recipient.address,
+          city: recipient.city,
+          district: recipient.district,
+          state: recipient.state,
+          zipcode: recipient.zipcode,
+        })
+      })
+  }
+
   async findManyDeliveredByDeliveryPersonId({
     page,
     deliveryPersonId,

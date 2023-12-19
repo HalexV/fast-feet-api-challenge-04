@@ -6,6 +6,7 @@ import { FetchPackagesUseCase } from './fetch-packages'
 import { makePackage } from 'test/factories/make-package'
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
+import { makeRecipient } from 'test/factories/make-recipient'
 
 let inMemoryPhotosRepository: InMemoryPhotosRepository
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
@@ -31,9 +32,22 @@ describe('Fetch packages', () => {
   })
 
   it('should be able to fetch packages', async () => {
+    const recipient1 = makeRecipient({
+      name: 'John Doe',
+    })
+
+    await inMemoryRecipientsRepository.create(recipient1)
+
+    const recipient2 = makeRecipient({
+      name: 'Jerry Doe',
+    })
+
+    await inMemoryRecipientsRepository.create(recipient2)
+
     await inMemoryPackagesRepository.create(
       makePackage({
         description: 'Package 1',
+        recipientId: recipient1.id,
       }),
     )
 
@@ -42,6 +56,7 @@ describe('Fetch packages', () => {
     await inMemoryPackagesRepository.create(
       makePackage({
         description: 'Package 2',
+        recipientId: recipient1.id,
       }),
     )
 
@@ -50,6 +65,7 @@ describe('Fetch packages', () => {
     await inMemoryPackagesRepository.create(
       makePackage({
         description: 'Package 3',
+        recipientId: recipient2.id,
       }),
     )
 
@@ -62,20 +78,31 @@ describe('Fetch packages', () => {
       expect(result.value.pkgs).toEqual([
         expect.objectContaining({
           description: 'Package 3',
+          recipient: 'Jerry Doe',
         }),
         expect.objectContaining({
           description: 'Package 2',
+          recipient: 'John Doe',
         }),
         expect.objectContaining({
           description: 'Package 1',
+          recipient: 'John Doe',
         }),
       ])
     }
   })
 
   it('should be able to fetch paginated packages', async () => {
+    const recipient = makeRecipient()
+
+    await inMemoryRecipientsRepository.create(recipient)
+
     for (let i = 0; i < 22; i++) {
-      await inMemoryPackagesRepository.create(makePackage())
+      await inMemoryPackagesRepository.create(
+        makePackage({
+          recipientId: recipient.id,
+        }),
+      )
     }
 
     const result = await sut.execute({

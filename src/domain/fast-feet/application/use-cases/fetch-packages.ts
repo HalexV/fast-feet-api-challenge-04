@@ -1,6 +1,6 @@
 import { Either, right } from '@/core/types/either'
-import { Package } from '../../enterprise/entities/Package'
 import { PackagesRepository } from '../repositories/packages-repository'
+import { PackageWithRecipient } from '../../enterprise/entities/value-objects/package-with-recipient'
 
 interface FetchPackagesUseCaseRequest {
   page: number
@@ -9,7 +9,7 @@ interface FetchPackagesUseCaseRequest {
 type FetchPackagesUseCaseResponse = Either<
   null,
   {
-    pkgs: Package[]
+    pkgs: PackageWithRecipient[]
   }
 >
 
@@ -19,7 +19,7 @@ export class FetchPackagesUseCase {
   async execute({
     page,
   }: FetchPackagesUseCaseRequest): Promise<FetchPackagesUseCaseResponse> {
-    const pkgs = await this.packagesRepository.findMany({
+    const pkgs = await this.packagesRepository.findManyWithRecipient({
       page,
     })
 

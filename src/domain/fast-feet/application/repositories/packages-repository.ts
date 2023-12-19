@@ -21,6 +21,9 @@ export abstract class PackagesRepository {
     id: string,
   ): Promise<PackageWithRecipient | null>
   abstract findMany(params: PaginationParams): Promise<Package[]>
+  abstract findManyWithRecipient(
+    params: PaginationParams,
+  ): Promise<PackageWithRecipient[]>
   abstract findManyDeliveredByDeliveryPersonId(
     params: FindManyDeliveredByDeliveryPersonIdParams,
   ): Promise<Package[]>
