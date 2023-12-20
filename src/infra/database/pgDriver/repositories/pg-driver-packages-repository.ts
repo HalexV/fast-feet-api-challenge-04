@@ -1,7 +1,7 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
-  FindManyByAddressAndDeliveryPersonIdParams,
-  FindManyDeliveredByDeliveryPersonIdParams,
+  FindManyByAddressAndDeliveryPersonIdWithRecipientParams,
+  FindManyDeliveredByDeliveryPersonIdWithRecipientParams,
   PackagesRepository,
 } from '@/domain/fast-feet/application/repositories/packages-repository'
 import { Package } from '@/domain/fast-feet/enterprise/entities/Package'
@@ -10,6 +10,8 @@ import { EnvService } from '@/infra/env/env.service'
 import { StatusOptions } from '@/core/types/status'
 import { PgDriverPackageMapper } from '../mappers/pg-driver-package-mapper'
 import { Injectable } from '@nestjs/common'
+import { PackageWithRecipient } from '@/domain/fast-feet/enterprise/entities/value-objects/package-with-recipient'
+import { PgDriverPackageWithRecipientMapper } from '../mappers/pg-driver-package-with-recipient-mapper'
 
 @Injectable()
 export class PgDriverPackagesRepository implements PackagesRepository {
@@ -37,19 +39,46 @@ export class PgDriverPackagesRepository implements PackagesRepository {
     return PgDriverPackageMapper.toDomain(data)
   }
 
+  async findByIdWithRecipient(
+    id: string,
+  ): Promise<PackageWithRecipient | null> {
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT p.id, p.description, p.status, p.posted_at, p.withdrew_at, p.delivered_at, p.updated_at, p.delivery_person_id, p.recipient_id, r.name, r.address, r.district, r.city, r.state, r.zipcode
+    FROM "${this.schema}"."packages" AS p 
+    INNER JOIN "${this.schema}"."recipients" AS r 
+    ON p.recipient_id = r.id
+    WHERE p.id=$1 LIMIT 1;
+    `,
+      [id],
+    )
+
+    const data = result.rows[0]
+
+    if (!data) return null
+
+    return PgDriverPackageWithRecipientMapper.toDomain(data)
+  }
+
   async findMany(params: PaginationParams): Promise<Package[]> {
     throw new Error('Method not implemented.')
   }
 
-  async findManyDeliveredByDeliveryPersonId(
-    params: FindManyDeliveredByDeliveryPersonIdParams,
-  ): Promise<Package[]> {
+  async findManyWithRecipient(
+    params: PaginationParams,
+  ): Promise<PackageWithRecipient[]> {
     throw new Error('Method not implemented.')
   }
 
-  async findManyPendingByAddressAndDeliveryPersonId(
-    params: FindManyByAddressAndDeliveryPersonIdParams,
-  ): Promise<Package[]> {
+  async findManyDeliveredByDeliveryPersonIdWithRecipient(
+    params: FindManyDeliveredByDeliveryPersonIdWithRecipientParams,
+  ): Promise<PackageWithRecipient[]> {
+    throw new Error('Method not implemented.')
+  }
+
+  async findManyPendingByAddressAndDeliveryPersonIdWithRecipient(
+    params: FindManyByAddressAndDeliveryPersonIdWithRecipientParams,
+  ): Promise<PackageWithRecipient[]> {
     throw new Error('Method not implemented.')
   }
 
