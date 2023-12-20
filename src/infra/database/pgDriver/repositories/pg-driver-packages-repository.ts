@@ -64,10 +64,23 @@ export class PgDriverPackagesRepository implements PackagesRepository {
     throw new Error('Method not implemented.')
   }
 
-  async findManyWithRecipient(
-    params: PaginationParams,
-  ): Promise<PackageWithRecipient[]> {
-    throw new Error('Method not implemented.')
+  async findManyWithRecipient({
+    page,
+  }: PaginationParams): Promise<PackageWithRecipient[]> {
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT p.id, p.description, p.status, p.posted_at, p.withdrew_at, p.delivered_at, p.updated_at, p.delivery_person_id, p.recipient_id, r.name, r.address, r.district, r.city, r.state, r.zipcode
+    FROM "${this.schema}"."packages" AS p 
+    INNER JOIN "${this.schema}"."recipients" AS r 
+    ON p.recipient_id = r.id
+    ORDER BY p.posted_at DESC LIMIT 20 OFFSET $1;
+    `,
+      [(page - 1) * 20],
+    )
+
+    const data = result.rows
+
+    return data.map(PgDriverPackageWithRecipientMapper.toDomain)
   }
 
   async findManyDeliveredByDeliveryPersonIdWithRecipient(
