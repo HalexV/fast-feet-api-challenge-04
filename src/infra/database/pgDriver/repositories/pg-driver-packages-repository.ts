@@ -83,10 +83,27 @@ export class PgDriverPackagesRepository implements PackagesRepository {
     return data.map(PgDriverPackageWithRecipientMapper.toDomain)
   }
 
-  async findManyDeliveredByDeliveryPersonIdWithRecipient(
-    params: FindManyDeliveredByDeliveryPersonIdWithRecipientParams,
-  ): Promise<PackageWithRecipient[]> {
-    throw new Error('Method not implemented.')
+  async findManyDeliveredByDeliveryPersonIdWithRecipient({
+    page,
+    deliveryPersonId,
+  }: FindManyDeliveredByDeliveryPersonIdWithRecipientParams): Promise<
+    PackageWithRecipient[]
+  > {
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT p.id, p.description, p.status, p.posted_at, p.withdrew_at, p.delivered_at, p.updated_at, p.delivery_person_id, p.recipient_id, r.name, r.address, r.district, r.city, r.state, r.zipcode
+    FROM "${this.schema}"."packages" AS p 
+    INNER JOIN "${this.schema}"."recipients" AS r 
+    ON p.recipient_id = r.id
+    WHERE p.delivery_person_id=$2 AND p.status=$3
+    ORDER BY p.posted_at DESC LIMIT 20 OFFSET $1;
+    `,
+      [(page - 1) * 20, deliveryPersonId, StatusOptions.delivered],
+    )
+
+    const data = result.rows
+
+    return data.map(PgDriverPackageWithRecipientMapper.toDomain)
   }
 
   async findManyPendingByAddressAndDeliveryPersonIdWithRecipient(

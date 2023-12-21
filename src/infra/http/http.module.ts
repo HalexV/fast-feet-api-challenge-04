@@ -42,6 +42,8 @@ import { WithdrawPackageController } from './controllers/withdraw-package.contro
 import { WithdrawPackageUseCase } from '@/domain/fast-feet/application/use-cases/withdraw-package'
 import { ReturnPackageController } from './controllers/return-package.controller'
 import { ReturnPackageUseCase } from '@/domain/fast-feet/application/use-cases/return-package'
+import { FetchDeliveredPackagesByDeliveryPersonIdController } from './controllers/fetch-delivered-packages-by-delivery-person-id.controller'
+import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from '@/domain/fast-feet/application/use-cases/fetch-delivered-packages-by-delivery-person-id'
 
 @Module({
   imports: [CryptographyModule],
@@ -67,6 +69,7 @@ import { ReturnPackageUseCase } from '@/domain/fast-feet/application/use-cases/r
     MarkPackageAsWaitingController,
     WithdrawPackageController,
     ReturnPackageController,
+    FetchDeliveredPackagesByDeliveryPersonIdController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -90,6 +93,7 @@ import { ReturnPackageUseCase } from '@/domain/fast-feet/application/use-cases/r
     MarkPackageAsWaitingUseCase,
     WithdrawPackageUseCase,
     ReturnPackageUseCase,
+    FetchDeliveredPackagesByDeliveryPersonIdUseCase,
   ],
 })
 export class HttpModule {}
