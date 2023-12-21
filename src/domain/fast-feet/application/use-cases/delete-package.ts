@@ -1,13 +1,14 @@
 import { Either, left, right } from '@/core/types/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackagesRepository } from '../repositories/packages-repository'
+import { Injectable } from '@nestjs/common'
 
 interface DeletePackageUseCaseRequest {
   id: string
 }
 
 type DeletePackageUseCaseResponse = Either<ResourceNotFoundError, null>
-
+@Injectable()
 export class DeletePackageUseCase {
   constructor(private readonly packagesRepository: PackagesRepository) {}
 
