@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { PackagesRepository } from '../repositories/packages-repository'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 import { DeliveryPeopleRepository } from '../repositories/delivery-people-repository'
+import { Injectable } from '@nestjs/common'
 
 interface WithdrawPackageUseCaseRequest {
   id: string
@@ -16,7 +17,7 @@ type WithdrawPackageUseCaseResponse = Either<
     pkg: Package
   }
 >
-
+@Injectable()
 export class WithdrawPackageUseCase {
   constructor(
     private readonly packagesRepository: PackagesRepository,
