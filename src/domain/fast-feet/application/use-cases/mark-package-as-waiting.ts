@@ -3,6 +3,7 @@ import { Package } from '../../enterprise/entities/Package'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { PackagesRepository } from '../repositories/packages-repository'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
 interface MarkPackageAsWaitingUseCaseRequest {
   id: string
@@ -14,7 +15,7 @@ type MarkPackageAsWaitingUseCaseResponse = Either<
     pkg: Package
   }
 >
-
+@Injectable()
 export class MarkPackageAsWaitingUseCase {
   constructor(private readonly packagesRepository: PackagesRepository) {}
 
