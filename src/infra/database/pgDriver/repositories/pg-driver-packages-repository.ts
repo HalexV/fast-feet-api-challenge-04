@@ -166,7 +166,7 @@ export class PgDriverPackagesRepository implements PackagesRepository {
       posted_at = $6,
       withdrew_at = $7,
       delivered_at = $8,
-      updated_at = $9,
+      updated_at = $9
       
     WHERE id=$1;
     `,

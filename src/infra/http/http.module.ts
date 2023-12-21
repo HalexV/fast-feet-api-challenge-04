@@ -32,6 +32,8 @@ import { GetPackageController } from './controllers/get-package.controller'
 import { GetPackageUseCase } from '@/domain/fast-feet/application/use-cases/get-package'
 import { FetchPackagesController } from './controllers/fetch-packages.controller'
 import { FetchPackagesUseCase } from '@/domain/fast-feet/application/use-cases/fetch-packages'
+import { EditPackageController } from './controllers/edit-package.controller'
+import { EditPackageUseCase } from '@/domain/fast-feet/application/use-cases/edit-package'
 
 @Module({
   imports: [CryptographyModule],
@@ -52,6 +54,7 @@ import { FetchPackagesUseCase } from '@/domain/fast-feet/application/use-cases/f
     PostPackageController,
     GetPackageController,
     FetchPackagesController,
+    EditPackageController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -70,6 +73,7 @@ import { FetchPackagesUseCase } from '@/domain/fast-feet/application/use-cases/f
     PostPackageUseCase,
     GetPackageUseCase,
     FetchPackagesUseCase,
+    EditPackageUseCase,
   ],
 })
 export class HttpModule {}

@@ -7,6 +7,7 @@ import { RecipientsRepository } from '../repositories/recipients-repository'
 import { DeliveryPeopleRepository } from '../repositories/delivery-people-repository'
 import { PackageStatusNotAllowedError } from './errors/package-status-not-allowed-error'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Injectable } from '@nestjs/common'
 
 interface EditPackageUseCaseRequest {
   id: string
@@ -25,7 +26,7 @@ type EditPackageUseCaseResponse = Either<
     pkg: Package
   }
 >
-
+@Injectable()
 export class EditPackageUseCase {
   constructor(
     private readonly packagesRepository: PackagesRepository,
