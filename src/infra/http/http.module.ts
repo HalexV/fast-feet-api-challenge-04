@@ -40,6 +40,8 @@ import { MarkPackageAsWaitingController } from './controllers/mark-package-as-wa
 import { MarkPackageAsWaitingUseCase } from '@/domain/fast-feet/application/use-cases/mark-package-as-waiting'
 import { WithdrawPackageController } from './controllers/withdraw-package.controller'
 import { WithdrawPackageUseCase } from '@/domain/fast-feet/application/use-cases/withdraw-package'
+import { ReturnPackageController } from './controllers/return-package.controller'
+import { ReturnPackageUseCase } from '@/domain/fast-feet/application/use-cases/return-package'
 
 @Module({
   imports: [CryptographyModule],
@@ -64,6 +66,7 @@ import { WithdrawPackageUseCase } from '@/domain/fast-feet/application/use-cases
     DeletePackageController,
     MarkPackageAsWaitingController,
     WithdrawPackageController,
+    ReturnPackageController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -86,6 +89,7 @@ import { WithdrawPackageUseCase } from '@/domain/fast-feet/application/use-cases
     DeletePackageUseCase,
     MarkPackageAsWaitingUseCase,
     WithdrawPackageUseCase,
+    ReturnPackageUseCase,
   ],
 })
 export class HttpModule {}
