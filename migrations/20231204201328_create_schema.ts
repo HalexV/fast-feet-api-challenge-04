@@ -12,5 +12,7 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.raw(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)
+  if (schema !== 'public') {
+    await knex.raw(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)
+  }
 }
