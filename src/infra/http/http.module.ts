@@ -44,6 +44,8 @@ import { ReturnPackageController } from './controllers/return-package.controller
 import { ReturnPackageUseCase } from '@/domain/fast-feet/application/use-cases/return-package'
 import { FetchDeliveredPackagesByDeliveryPersonIdController } from './controllers/fetch-delivered-packages-by-delivery-person-id.controller'
 import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from '@/domain/fast-feet/application/use-cases/fetch-delivered-packages-by-delivery-person-id'
+import { FetchPackagesPendingNearDeliveryPersonController } from './controllers/fetch-packages-pending-near-delivery-person.controller'
+import { FetchPackagesPendingNearDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/fetch-packages-pending-near-delivery-person'
 
 @Module({
   imports: [CryptographyModule],
@@ -62,6 +64,8 @@ import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from '@/domain/fast-f
     EditRecipientController,
     RemoveRecipientController,
     PostPackageController,
+    FetchDeliveredPackagesByDeliveryPersonIdController,
+    FetchPackagesPendingNearDeliveryPersonController,
     GetPackageController,
     FetchPackagesController,
     EditPackageController,
@@ -69,7 +73,6 @@ import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from '@/domain/fast-f
     MarkPackageAsWaitingController,
     WithdrawPackageController,
     ReturnPackageController,
-    FetchDeliveredPackagesByDeliveryPersonIdController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -94,6 +97,7 @@ import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from '@/domain/fast-f
     WithdrawPackageUseCase,
     ReturnPackageUseCase,
     FetchDeliveredPackagesByDeliveryPersonIdUseCase,
+    FetchPackagesPendingNearDeliveryPersonUseCase,
   ],
 })
 export class HttpModule {}

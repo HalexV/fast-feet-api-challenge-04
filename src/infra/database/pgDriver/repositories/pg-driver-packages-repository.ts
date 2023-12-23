@@ -106,10 +106,42 @@ export class PgDriverPackagesRepository implements PackagesRepository {
     return data.map(PgDriverPackageWithRecipientMapper.toDomain)
   }
 
-  async findManyPendingByAddressAndDeliveryPersonIdWithRecipient(
-    params: FindManyByAddressAndDeliveryPersonIdWithRecipientParams,
-  ): Promise<PackageWithRecipient[]> {
-    throw new Error('Method not implemented.')
+  async findManyPendingByAddressAndDeliveryPersonIdWithRecipient({
+    page,
+    deliveryPersonId,
+    city,
+    state,
+    district,
+  }: FindManyByAddressAndDeliveryPersonIdWithRecipientParams): Promise<
+    PackageWithRecipient[]
+  > {
+    const result = await this.pgDriver.runQuery(
+      `
+    SELECT p.id, p.description, p.status, p.posted_at, p.withdrew_at, p.delivered_at, p.updated_at, p.delivery_person_id, p.recipient_id, r.name, r.address, r.district, r.city, r.state, r.zipcode
+    FROM "${this.schema}"."packages" AS p 
+    INNER JOIN "${this.schema}"."recipients" AS r 
+    ON p.recipient_id = r.id
+    WHERE ((p.delivery_person_id = $1 AND p.status = $2) OR p.status = $3) 
+      AND r.state ILIKE $4
+      AND f_unaccent(r.city) ILIKE f_unaccent($5) 
+      AND ($6::TEXT IS NULL OR f_unaccent(r.district) % f_unaccent($6::TEXT))
+    ORDER BY CASE WHEN p.status = $2 THEN 1 ELSE 2 END, p.posted_at ASC
+    LIMIT 20 OFFSET $7;
+    `,
+      [
+        deliveryPersonId,
+        StatusOptions.withdrew,
+        StatusOptions.waiting,
+        state,
+        city,
+        district,
+        (page - 1) * 20,
+      ],
+    )
+
+    const data = result.rows
+
+    return data.map(PgDriverPackageWithRecipientMapper.toDomain)
   }
 
   async findSomeNotDeliveredByRecipientId(
