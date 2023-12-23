@@ -35,11 +35,11 @@ Nesse desafio desenvolveremos uma API para controle de encomendas de uma transpo
 - [x] Deve ser possível realizar o CRUD dos entregadores
 - [x] Deve ser possível realizar o CRUD dos destinatários
 - [x] Deve ser possível realizar o CRUD das encomendas
-- [] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)
-- [] Deve ser possível retirar uma encomenda
+- [x] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada, somente o admin pode realizar essa ação)
+- [x] Deve ser possível retirar uma encomenda
 - [] Deve ser possível marcar uma encomenda como entregue
-- [] Deve ser possível marcar uma encomenda como devolvida
-- [] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
-- [] Deve ser possível listar as entregas de um usuário
+- [x] Deve ser possível marcar uma encomenda como devolvida (ação do admin)
+- [x] Deve ser possível listar as encomendas com endereços de entrega próximo ao local do entregador
+- [x] Deve ser possível listar as entregas de um usuário
 - [] Deve ser possível notificar o destinatário a cada alteração no status da encomenda
 - [x] Deve ser possível alterar a senha de um usuário
