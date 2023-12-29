@@ -46,9 +46,12 @@ import { FetchDeliveredPackagesByDeliveryPersonIdController } from './controller
 import { FetchDeliveredPackagesByDeliveryPersonIdUseCase } from '@/domain/fast-feet/application/use-cases/fetch-delivered-packages-by-delivery-person-id'
 import { FetchPackagesPendingNearDeliveryPersonController } from './controllers/fetch-packages-pending-near-delivery-person.controller'
 import { FetchPackagesPendingNearDeliveryPersonUseCase } from '@/domain/fast-feet/application/use-cases/fetch-packages-pending-near-delivery-person'
+import { StorageModule } from '../storage/storage.module'
+import { UploadPhotoAndMarkPackageAsDeliveredController } from './controllers/upload-photo-and-mark-package-as-delivered.controller'
+import { UploadPhotoAndMarkPackageAsDeliveredUseCase } from '@/domain/fast-feet/application/use-cases/upload-photo-and-mark-package-as-delivered'
 
 @Module({
-  imports: [CryptographyModule],
+  imports: [CryptographyModule, StorageModule],
   controllers: [
     AuthenticateAdminController,
     AuthenticateDeliveryPersonController,
@@ -73,6 +76,7 @@ import { FetchPackagesPendingNearDeliveryPersonUseCase } from '@/domain/fast-fee
     MarkPackageAsWaitingController,
     WithdrawPackageController,
     ReturnPackageController,
+    UploadPhotoAndMarkPackageAsDeliveredController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -98,6 +102,7 @@ import { FetchPackagesPendingNearDeliveryPersonUseCase } from '@/domain/fast-fee
     ReturnPackageUseCase,
     FetchDeliveredPackagesByDeliveryPersonIdUseCase,
     FetchPackagesPendingNearDeliveryPersonUseCase,
+    UploadPhotoAndMarkPackageAsDeliveredUseCase,
   ],
 })
 export class HttpModule {}

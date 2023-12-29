@@ -8,6 +8,7 @@ import { PackageStatusNotAllowedError } from './errors/package-status-not-allowe
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { PhotosRepository } from '../repositories/photos-repository'
 import { Photo } from '../../enterprise/entities/Photo'
+import { Injectable } from '@nestjs/common'
 
 interface UploadPhotoAndMarkPackageAsDeliveredUseCaseRequest {
   id: string
@@ -27,7 +28,7 @@ type UploadPhotoAndMarkPackageAsDeliveredUseCaseResponse = Either<
     photo: Photo
   }
 >
-
+@Injectable()
 export class UploadPhotoAndMarkPackageAsDeliveredUseCase {
   constructor(
     private readonly packagesRepository: PackagesRepository,
