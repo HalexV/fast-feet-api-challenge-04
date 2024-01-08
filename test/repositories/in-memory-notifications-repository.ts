@@ -10,12 +10,8 @@ export class InMemoryNotificationsRepository
     this.items.push(notification)
   }
 
-  async save(notification: Notification): Promise<void> {
-    const itemIndex = this.items.findIndex(
-      (item) => item.id.toString() === notification.id.toString(),
-    )
-
-    this.items[itemIndex] = notification
+  async findByRecipientId(recipientId: string): Promise<Notification | null> {
+    throw new Error('Method not implemented.')
   }
 
   async deleteManyByRecipientId(recipientId: string): Promise<void> {

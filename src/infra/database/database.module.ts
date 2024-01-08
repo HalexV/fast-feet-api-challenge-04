@@ -17,6 +17,8 @@ import { PackagesRepository } from '@/domain/fast-feet/application/repositories/
 import { PgDriverPackagesRepository } from './pgDriver/repositories/pg-driver-packages-repository'
 import { PhotosRepository } from '@/domain/fast-feet/application/repositories/photos-repository'
 import { PgDriverPhotosRepository } from './pgDriver/repositories/pg-driver-photos-repository'
+import { NotificationsRepository } from '@/domain/notification/application/repositories/notifications-repository'
+import { PgDriverNotificationsRepository } from './pgDriver/repositories/pg-driver-notifications-repository'
 
 @Global()
 @Module({
@@ -51,6 +53,10 @@ import { PgDriverPhotosRepository } from './pgDriver/repositories/pg-driver-phot
       provide: PhotosRepository,
       useClass: PgDriverPhotosRepository,
     },
+    {
+      provide: NotificationsRepository,
+      useClass: PgDriverNotificationsRepository,
+    },
   ],
   exports: [
     PgDriverService,
@@ -59,6 +65,7 @@ import { PgDriverPhotosRepository } from './pgDriver/repositories/pg-driver-phot
     RecipientsRepository,
     PackagesRepository,
     PhotosRepository,
+    NotificationsRepository,
   ],
 })
 export class DatabaseModule extends ConfigurableDatabaseModule {}
