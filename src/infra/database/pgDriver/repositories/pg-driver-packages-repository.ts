@@ -12,6 +12,7 @@ import { PgDriverPackageMapper } from '../mappers/pg-driver-package-mapper'
 import { Injectable } from '@nestjs/common'
 import { PackageWithRecipient } from '@/domain/fast-feet/enterprise/entities/value-objects/package-with-recipient'
 import { PgDriverPackageWithRecipientMapper } from '../mappers/pg-driver-package-with-recipient-mapper'
+import { DomainEvents } from '@/core/events/domain-events'
 
 @Injectable()
 export class PgDriverPackagesRepository implements PackagesRepository {
@@ -200,6 +201,8 @@ export class PgDriverPackagesRepository implements PackagesRepository {
         data.updated_at,
       ],
     )
+
+    DomainEvents.dispatchEventsForAggregate(pkg.id)
   }
 
   async save(pkg: Package): Promise<void> {
@@ -231,6 +234,8 @@ export class PgDriverPackagesRepository implements PackagesRepository {
         data.updated_at,
       ],
     )
+
+    DomainEvents.dispatchEventsForAggregate(pkg.id)
   }
 
   async deleteManyByRecipientId(recipientId: string): Promise<void> {
