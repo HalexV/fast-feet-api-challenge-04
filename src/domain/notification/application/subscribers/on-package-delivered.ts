@@ -7,7 +7,9 @@ import { MakePackageDeliveredEmailHTML } from '../email/makePackageDeliveredEmai
 import { PackageDeliveredEvent } from '@/domain/fast-feet/enterprise/events/package-delivered-event'
 import { DeliveryPeopleRepository } from '@/domain/fast-feet/application/repositories/delivery-people-repository'
 import { PhotosRepository } from '@/domain/fast-feet/application/repositories/photos-repository'
-
+import { EnvService } from '@/infra/env/env.service'
+import { Injectable } from '@nestjs/common'
+@Injectable()
 export class OnPackageDelivered implements EventHandler {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,
@@ -16,6 +18,7 @@ export class OnPackageDelivered implements EventHandler {
     private readonly registerNotification: RegisterNotificationUseCase,
     private readonly sendEmailNotification: SendEmailNotificationUseCase,
     private readonly makePackageDeliveredEmailHTML: MakePackageDeliveredEmailHTML,
+    private readonly envService: EnvService,
   ) {
     this.setupSubscriptions()
   }
@@ -54,7 +57,9 @@ export class OnPackageDelivered implements EventHandler {
     const packageDescription = pkg.description
     const recipientFirstName = recipient.name.split(' ')[0]
     const deliveryPersonName = deliveryPerson.name
-    const photoUrl = photo.filename
+    const photoUrl = `${this.envService.get('AWS_BUCKET_PUBLIC_URL')}${
+      photo.filename
+    }`
     const deliveredAt = pkg.deliveredAt
     const status = 'delivered'
 

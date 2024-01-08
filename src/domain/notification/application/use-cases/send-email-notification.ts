@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Emailer } from '../email/emailer'
 
 export interface SendEmailNotificationUseCaseRequest {
@@ -5,7 +6,7 @@ export interface SendEmailNotificationUseCaseRequest {
   content: string
   recipientEmail: string
 }
-
+@Injectable()
 export class SendEmailNotificationUseCase {
   constructor(private readonly emailer: Emailer) {}
 
