@@ -8,6 +8,8 @@ import { CryptographyModule } from './cryptography/cryptography.module'
 import { RegisterDefaultAdminUseCase } from '@/domain/fast-feet/application/use-cases/register-default-admin'
 import { AuthModule } from './auth/auth.module'
 import { HttpModule } from './http/http.module'
+import { MailerModule } from '@nestjs-modules/mailer'
+import { EventsModule } from './events/events.module'
 
 @Module({
   imports: [
@@ -23,9 +25,25 @@ import { HttpModule } from './http/http.module'
         connectionString: envService.get('POSTGRES_URL'),
       }),
     }),
+    MailerModule.forRootAsync({
+      imports: [EnvModule],
+      inject: [EnvService],
+      useFactory: (envService: EnvService) => ({
+        transport: {
+          host: envService.get('EMAIL_HOST'),
+          port: envService.get('EMAIL_PORT'),
+          secure: false,
+          auth: {
+            user: envService.get('EMAIL_USERNAME'),
+            pass: envService.get('EMAIL_PASSWORD'),
+          },
+        },
+      }),
+    }),
     CryptographyModule,
     AuthModule,
     HttpModule,
+    EventsModule,
   ],
   providers: [RegisterDefaultAdminUseCase],
 })
