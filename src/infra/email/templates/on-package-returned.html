@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+<!---->
+{% block deliveryProgress %}
+<div class="delivery-progress">
+  <div class="step in-progress">
+    Posted
+    <div class="node"></div>
+  </div>
+  <div class="step">
+    Waiting
+    <div class="node"></div>
+  </div>
+  <div class="step">
+    Withdrew
+    <div class="node"></div>
+  </div>
+  <div class="step">
+    Delivered
+    <div class="node"></div>
+  </div>
+</div>
+{% endblock %}
+<!---->
+{% block emailMessage %}
+<div id="email-message">
+  <p>
+    Hi! {{recipientFirstName}}, your package was returned to FastFeet by
+    delivery person {{deliveryPersonName}} to be delivered to you at:
+    {{completeAddress}}.
+  </p>
+  <p>Package description: {{packageDescription}}</p>
+  <p>Status: {{status}}.</p>
+</div>
+{% endblock %}

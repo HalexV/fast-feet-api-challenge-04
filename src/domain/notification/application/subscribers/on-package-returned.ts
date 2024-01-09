@@ -6,7 +6,8 @@ import { RecipientsRepository } from '@/domain/fast-feet/application/repositorie
 import { MakePackageReturnedEmailHTML } from '../email/makePackageReturnedEmailHTML'
 import { PackageReturnedEvent } from '@/domain/fast-feet/enterprise/events/package-returned-event'
 import { DeliveryPeopleRepository } from '@/domain/fast-feet/application/repositories/delivery-people-repository'
-
+import { Injectable } from '@nestjs/common'
+@Injectable()
 export class OnPackageReturned implements EventHandler {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,

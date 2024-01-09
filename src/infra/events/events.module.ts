@@ -7,6 +7,7 @@ import { EnvModule } from '../env/env.module'
 import { OnPackageDelivered } from '@/domain/notification/application/subscribers/on-package-delivered'
 import { OnPackageWaiting } from '@/domain/notification/application/subscribers/on-package-waiting'
 import { OnPackageWithdrew } from '@/domain/notification/application/subscribers/on-package-withdrew'
+import { OnPackageReturned } from '@/domain/notification/application/subscribers/on-package-returned'
 
 @Module({
   imports: [EmailModule, EnvModule],
@@ -17,6 +18,7 @@ import { OnPackageWithdrew } from '@/domain/notification/application/subscribers
     OnPackageWaiting,
     OnPackageWithdrew,
     OnPackageDelivered,
+    OnPackageReturned,
   ],
 })
 export class EventsModule {}
