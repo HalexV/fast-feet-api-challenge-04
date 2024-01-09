@@ -6,7 +6,8 @@ import { RecipientsRepository } from '@/domain/fast-feet/application/repositorie
 import { MakePackageWithdrewEmailHTML } from '../email/makePackageWithdrewEmailHTML'
 import { PackageWithdrewEvent } from '@/domain/fast-feet/enterprise/events/package-withdrew-event'
 import { DeliveryPeopleRepository } from '@/domain/fast-feet/application/repositories/delivery-people-repository'
-
+import { Injectable } from '@nestjs/common'
+@Injectable()
 export class OnPackageWithdrew implements EventHandler {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,

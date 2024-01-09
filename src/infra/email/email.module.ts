@@ -7,6 +7,8 @@ import { MakePackageDeliveredEmailHTML } from '@/domain/notification/application
 import { NunjucksMakePackageDeliveredEmailHTML } from './nunjucks/factories/nunjucks-make-package-delivered-email-html'
 import { MakePackageWaitingEmailHTML } from '@/domain/notification/application/email/makePackageWaitingEmailHTML'
 import { NunjucksMakePackageWaitingEmailHTML } from './nunjucks/factories/nunjucks-make-package-waiting-email-html'
+import { MakePackageWithdrewEmailHTML } from '@/domain/notification/application/email/makePackageWithdrewEmailHTML'
+import { NunjucksMakePackageWithdrewEmailHTML } from './nunjucks/factories/nunjucks-make-package-withdrew-email-html'
 
 @Module({
   providers: [
@@ -23,6 +25,10 @@ import { NunjucksMakePackageWaitingEmailHTML } from './nunjucks/factories/nunjuc
       useClass: NunjucksMakePackageWaitingEmailHTML,
     },
     {
+      provide: MakePackageWithdrewEmailHTML,
+      useClass: NunjucksMakePackageWithdrewEmailHTML,
+    },
+    {
       provide: MakePackageDeliveredEmailHTML,
       useClass: NunjucksMakePackageDeliveredEmailHTML,
     },
@@ -31,6 +37,7 @@ import { NunjucksMakePackageWaitingEmailHTML } from './nunjucks/factories/nunjuc
     Emailer,
     MakePackagePostedEmailHTML,
     MakePackageWaitingEmailHTML,
+    MakePackageWithdrewEmailHTML,
     MakePackageDeliveredEmailHTML,
   ],
 })
