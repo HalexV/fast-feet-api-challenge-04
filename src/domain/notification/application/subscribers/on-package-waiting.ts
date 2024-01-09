@@ -5,7 +5,8 @@ import { SendEmailNotificationUseCase } from '../use-cases/send-email-notificati
 import { RecipientsRepository } from '@/domain/fast-feet/application/repositories/recipients-repository'
 import { MakePackageWaitingEmailHTML } from '../email/makePackageWaitingEmailHTML'
 import { PackageWaitingEvent } from '@/domain/fast-feet/enterprise/events/package-waiting-event'
-
+import { Injectable } from '@nestjs/common'
+@Injectable()
 export class OnPackageWaiting implements EventHandler {
   constructor(
     private readonly recipientsRepository: RecipientsRepository,
